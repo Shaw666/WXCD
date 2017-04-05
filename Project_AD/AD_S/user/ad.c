@@ -128,7 +128,7 @@ interrupt void  adc_isr(void)
 	EDIS;
 	AdcRegs.ADCINTFLGCLR.bit.ADCINT3 = 1;		//Clear ADCINT1 flag reinitialize for next SOC
 
-    ADResReg[0] =  &AdcResult.ADCRESULT0;//空置
+//    ADResReg[0] =  &AdcResult.ADCRESULT0;//空置
     ADResReg[1] =  &AdcResult.ADCRESULT1;//3.3v掉电检测     2.2v以下
     ADResReg[2] =  &AdcResult.ADCRESULT2;//5v检测   2v以下
     ADResReg[3] =  &AdcResult.ADCRESULT3;//-15v检测  2.5v以下
@@ -146,8 +146,8 @@ interrupt void  adc_isr(void)
 //    ADResReg[14] = &AdcResult.ADCRESULT14;//保留
 //    ADResReg[15] = &AdcResult.ADCRESULT15;//保留
 
-//1111 1010 1100 0000
-	AdcRegs.ADCSOCFRC1.all = 0XFAC0; //软件触发AD 的 SOC0--SOC3采样
+//0000 0011 0101 1110
+	AdcRegs.ADCSOCFRC1.all = 0X035E; //软件触发AD 的 SOC0--SOC3采样
 
 //	printf("\r\nAD Result is SOC0-A1:%0.2fV  SOC1-B1:%0.2fV  SOC2-A1:%0.2fV  SOC3-B1:%0.2fV",(float)((AdcResult.ADCRESULT0)*3.3/4096),(float)((AdcResult.ADCRESULT1)*3.3/4096),(float)((AdcResult.ADCRESULT2)*3.3/4096),(float)((AdcResult.ADCRESULT3)*3.3/4096));
 }

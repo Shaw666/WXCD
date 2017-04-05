@@ -1,6 +1,6 @@
 /*
  * main.c
- *
+ *  发射端程序 V1.0
  *  Created on: 2017-3-20
  *      Author: Shaw
  */
@@ -46,9 +46,10 @@ void main(void) {
 	SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC =0;
 	EDIS;
 	Timer0_init(); //初始化定时器0用于定时处理相关任务
-//	Timer1_init(); //初始化定时器1用于定时处理PID 区别收发
+	Timer1_init(); //初始化定时器1用于定时处理PID 区别收发
 
-	SCI_Init(128000);   //初始化SCI用于调试串口
+	SCI_Init(115200);   //初始化SCI用于调试串口
+	SetupSCI(128000);
 	ZM5168_INit();              //初始化zm5168_P0模块
 //	open_uart_debug();
 
@@ -58,7 +59,7 @@ void main(void) {
 
 //	EPWM1_Config(1500);         //初始化PWM20k 1us死区 区别收发
 //	EPWM2_Config(1500);
-	InitEPwm1Example();
+	InitEPwm1Example();         //移相全桥
 	InitEPwm2Example();
 
 	EALLOW;
@@ -95,6 +96,7 @@ void main(void) {
     		}
 			if(timer0Base.msCounter >= 1000)//ms
 			{
+//				scia_xmit(0x01);
 				i+=1;
 				timer0Base.msCounter = 0;
 				EPwm2Regs.TBPHS.half.TBPHS = 8.3*i;

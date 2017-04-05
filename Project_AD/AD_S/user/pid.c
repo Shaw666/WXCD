@@ -108,8 +108,8 @@ unsigned char Send_Count; //串口需要发送的数据个数
 int j=0;     //串口发送数据计数
 void Upper_Uart(void)//上位机发送程序
 {
-	DataScope_Get_Channel_Data(*ADResReg[15],1);   //将电压环PID输入 写入通道 1
-	DataScope_Get_Channel_Data(*ADResReg[14]*3.3/4095.0,2);   //将电压环PID输入 写入通道 1
+	DataScope_Get_Channel_Data(*ADResReg[8],1);   //将电压环PID输入 写入通道 1
+	DataScope_Get_Channel_Data(*ADResReg[9]*3.3/4095.0,2);   //将电压环PID输入 写入通道 1
 //	DataScope_Get_Channel_Data(*ADResReg[13]*3.3/4095.0,3);   //将电压环PID输入 写入通道 1
 //	DataScope_Get_Channel_Data(*ADResReg[12]*3.3/4095.0,4);   //将电压环PID输入 写入通道 1
 
@@ -119,11 +119,11 @@ void Upper_Uart(void)//上位机发送程序
 	Send_Count = DataScope_Data_Generate(2); //生成4个通道的 格式化帧数据，返回帧数据长度
     for( j = 0;j<Send_Count;j++)  //循环发送,直到发送完毕
 	{
-    	while (SciaRegs.SCIFFTX.bit.TXFFST != 0);
-		SciaRegs.SCITXBUF=DataScope_OutPut_Buffer[j];
+//    	while (SciaRegs.SCIFFTX.bit.TXFFST != 0);
+//		SciaRegs.SCITXBUF=DataScope_OutPut_Buffer[j];
 
-//	while(LinaRegs.SCIFLR.bit.TXRDY == 0);
-//	//Begin transmission
-//	LinaRegs.SCITD = DataScope_OutPut_Buffer[j];
+	while(LinaRegs.SCIFLR.bit.TXRDY == 0);
+	//Begin transmission
+	LinaRegs.SCITD = DataScope_OutPut_Buffer[j];
 	}
 }

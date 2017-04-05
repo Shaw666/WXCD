@@ -30,7 +30,6 @@
 #include "Exint.h"
 #include "zm5168.h"
 #include "sim_spi.h"
-#include "CANcomm.h"
 
 
 //选择RGB 三色LED的高低电平点亮状态

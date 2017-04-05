@@ -48,7 +48,6 @@ user/printf_uart.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/led.h
 user/printf_uart.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Exint.h
 user/printf_uart.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/zm5168.h
 user/printf_uart.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/sim_spi.h
-user/printf_uart.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/CANcomm.h
 
 ../user/printf_uart.c: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdio.h: 
@@ -98,4 +97,3 @@ E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/led.h:
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Exint.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/zm5168.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/sim_spi.h: 
-E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/CANcomm.h: 

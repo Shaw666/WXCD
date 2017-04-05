@@ -47,7 +47,6 @@ user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/led.h
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Exint.h
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/zm5168.h
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/sim_spi.h
-user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/CANcomm.h
 
 ../user/Exint.c: 
 E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP28x_Project.h: 
@@ -96,4 +95,3 @@ E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/led.h:
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Exint.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/zm5168.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/sim_spi.h: 
-E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/CANcomm.h: 
