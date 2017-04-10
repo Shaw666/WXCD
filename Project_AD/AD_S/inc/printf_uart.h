@@ -9,7 +9,7 @@
 
 #define RTU_TIMEROUT 5 //ms
 
-#define SCI_FIFO_LEN  1 //定义DSP串口FIFO深度
+#define SCI_FIFO_LEN  3 //定义DSP串口FIFO深度
 
 
 #define UartRxLEN 20  //接收缓存长度
@@ -41,6 +41,8 @@ typedef struct Uart_Type{
 Uart_Msg; 
 
 extern Uart_Msg SCI_Msg;
+
+interrupt void uartRx_isr(void);
 
 //--------------------------------------------------------------------
 void handleRxFIFO(void);

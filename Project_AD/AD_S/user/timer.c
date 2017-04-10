@@ -43,7 +43,7 @@ void Timer1_init()
 //	InitCpuTimers();   //前级已经初始化完成
 
 	//中断配置步骤-----1,开启模块中断使能，位于 Timer->RegsAddr->TCR.bit.TIE = 1;
-	ConfigCpuTimer(&CpuTimer1, 60, 5000);//60MHz CPU Freq, 5ms
+	ConfigCpuTimer(&CpuTimer1, 60, 300);//60MHz CPU Freq, 5ms
 	CpuTimer1Regs.TCR.all = 0x4001;		   // Use write-only instruction to set TSS bit = 0
 
 	//中断配置步骤-----2，重映射中断服务函数

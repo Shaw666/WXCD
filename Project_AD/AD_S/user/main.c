@@ -39,7 +39,7 @@ void main(void) {
 	D401ON();
 	D402LOW();
 
-	LED_INit();   //初始化LED 区别收发
+	GPIO_INit();   //初始化GPIO 区别收发
 	KEY_Init();   //初始化拨码开关 区别收发
 	ExInt_Init(); //初始化外部中断 急停按钮 发射
 	EALLOW;
@@ -48,7 +48,7 @@ void main(void) {
 	Timer0_init(); //初始化定时器0用于定时处理相关任务
 	Timer1_init(); //初始化定时器1用于定时处理PID 区别收发
 
-	SCI_Init(115200);   //初始化SCI用于调试串口
+	SCI_Init(115200);   //初始化SCI
 	SetupSCI(128000);
 	ZM5168_INit();              //初始化zm5168_P0模块
 //	open_uart_debug();
@@ -79,6 +79,7 @@ void main(void) {
     	if(timer0Base.Mark_Para.Status_Bits.OnemsdFlag == 1)
     	{
     		timer0Base.Mark_Para.Status_Bits.OnemsdFlag = 0;
+
     		if(STOP_Scan()==Excep_qdyc){//驱动异常 拉低所有PWM切断
 //    			EPwm1Regs.DBCTL.bit.OUT_MODE = DB_DISABLE;
 //    			EPwm1Regs.AQSFRC.bit.RLDCSF =0x03;
@@ -96,6 +97,7 @@ void main(void) {
     		}
 			if(timer0Base.msCounter >= 1000)//ms
 			{
+				Upper_Uart();
 //				scia_xmit(0x01);
 				i+=1;
 				timer0Base.msCounter = 0;

@@ -85,22 +85,7 @@ void handleRxFIFO() {
 
 	}
 }
-u16 temp=0;
-//#################################################
-//串口接收中断函数
-//采用FIFO机制（缓存）
-//SCI_FIFO_LEN 定义为 1，最大为4
-//-----------------------------------------------
-interrupt void uartRx_isr(void) {
-	D402TOGGLE();
-	if(SciaRegs.SCIFFRX.bit.RXFFST==1)
-    temp = SciaRegs.SCIRXBUF.bit.RXDT;
-//	while (SciaRegs.SCIFFTX.bit.TXFFST != 0);
-	SciaRegs.SCITXBUF = temp;
-	D401TOGGLE();
-	SciaRegs.SCIFFRX.bit.RXFFINTCLR = 1;   // Clear Interrupt flag
-	PieCtrlRegs.PIEACK.bit.ACK9 = 1;
-}
+
 
 //#################################################
 //-----------------------------------------------
@@ -108,24 +93,25 @@ interrupt void uartRx_isr(void) {
 //128000  8N1
 // P21 框图介绍中断
 //-----------------------------------------------
-void SCI_Init(Uint32 buad)
-{
+void SCI_Init(Uint32 buad) {
+	Uint16 brr_reg = (1875000/buad) - 1;	//15000000/8 = 1875000
+
 	InitSciaGpio();
 	SciaRegs.SCICTL1.bit.SWRESET = 0;
 
- 	SciaRegs.SCICCR.all =0x0007;   // 1 stop bit,  No loopback
-                                   // No parity,8 char bits,
-                                   // async mode, idle-line protocol
+	SciaRegs.SCICCR.all = 0x0007;   // 1 stop bit,  No loopback
+									// No parity,8 char bits,
+									// async mode, idle-line protocol
 
-// baud = LSPCLK/8/((BRR+1)
-// baud @LSPCLK = 15MHz (60 MHz SYSCLK)
-	SciaRegs.SCIHBAUD    =0x0000;
-    SciaRegs.SCILBAUD    =16;      //0XC2-->9600 ; 97--> 19200 ;0x30-->38400;14-->128000
+	// baud = LSPCLK/8/((BRR+1)
+	// baud @LSPCLK = 15MHz (60 MHz SYSCLK)
+	SciaRegs.SCIHBAUD = (brr_reg >> 8) & 0x00FF;
+	SciaRegs.SCILBAUD = brr_reg & 0x00FF; //0XC2-->9600 ; 97--> 19200 ;0x30-->38400;14-->128000
 
-    SciaRegs.SCICTL1.bit.SWRESET = 1;     // Relinquish SCI from Reset
-    SciaRegs.SCIFFTX.bit.SCIRST=1;
+	SciaRegs.SCICTL1.bit.SWRESET = 1;     // Relinquish SCI from Reset
+	SciaRegs.SCIFFTX.bit.SCIRST = 1;
 
-	SciaRegs.SCIFFRX.bit.RXFFIL  = SCI_FIFO_LEN;  //设置FIFO深度
+	SciaRegs.SCIFFRX.bit.RXFFIL = 1;  //设置FIFO深度
 	SciaRegs.SCICTL1.bit.TXENA = 1;       //使能发送
 	SciaRegs.SCICTL1.bit.RXENA = 1;       //使能接收
 
@@ -134,17 +120,17 @@ void SCI_Init(Uint32 buad)
 //  SciaRegs.SCIFFTX.bit.TXFFIENA = 0; //禁止发送中断使能
 	//中断配置步骤-----1
 	SciaRegs.SCIFFTX.bit.SCIFFENA = 1; //使能FIFO中断
-	SciaRegs.SCIFFRX.bit.RXFFIENA=1;
+	SciaRegs.SCIFFRX.bit.RXFFIENA = 1;
 	EALLOW;
 	PieVectTable.SCIRXINTA = &uartRx_isr; //中断配置步骤-----2
 	EDIS;
 	PieCtrlRegs.PIEIER9.bit.INTx1 = 1;    //中断配置步骤-----3
 	IER |= M_INT9;						  //中断配置步骤-----4
 
-	SciaRegs.SCIFFCT.all=0x00;
+	SciaRegs.SCIFFCT.all = 0x00;
 
-	SciaRegs.SCIFFTX.bit.TXFIFOXRESET=1;
-	SciaRegs.SCIFFRX.bit.RXFIFORESET=1;
+	SciaRegs.SCIFFTX.bit.TXFIFOXRESET = 1;
+	SciaRegs.SCIFFRX.bit.RXFIFORESET = 1;
 }
 
 //#################################################

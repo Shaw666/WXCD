@@ -80,19 +80,19 @@ void ADC_Config(void)
 
 //-->HIKE ,AD选择触发源,软件触发 P34
 	AdcRegs.ADCSOC0CTL.bit.TRIGSEL 	= 0x00;
-	AdcRegs.ADCSOC1CTL.bit.TRIGSEL 	= 0x00; //ADCTRIG0- Software only
+	AdcRegs.ADCSOC1CTL.bit.TRIGSEL 	= 0x00; //ADCTRIG0- timer1
 	AdcRegs.ADCSOC2CTL.bit.TRIGSEL 	= 0x00;
 	AdcRegs.ADCSOC3CTL.bit.TRIGSEL 	= 0x00;
 	AdcRegs.ADCSOC4CTL.bit.TRIGSEL 	= 0x00;
-//	AdcRegs.ADCSOC5CTL.bit.TRIGSEL 	= 0x00; //ADCTRIG0- Software only
+//	AdcRegs.ADCSOC5CTL.bit.TRIGSEL 	= 0x00;
 	AdcRegs.ADCSOC6CTL.bit.TRIGSEL 	= 0x00;
 //	AdcRegs.ADCSOC7CTL.bit.TRIGSEL 	= 0x00;
 	AdcRegs.ADCSOC8CTL.bit.TRIGSEL 	= 0x00;
-	AdcRegs.ADCSOC9CTL.bit.TRIGSEL 	= 0x00; //ADCTRIG0- Software only
+	AdcRegs.ADCSOC9CTL.bit.TRIGSEL 	= 0x00;
 //	AdcRegs.ADCSOC10CTL.bit.TRIGSEL 	= 0x00;
 //	AdcRegs.ADCSOC11CTL.bit.TRIGSEL 	= 0x00;
 //	AdcRegs.ADCSOC12CTL.bit.TRIGSEL 	= 0x00;
-//	AdcRegs.ADCSOC13CTL.bit.TRIGSEL 	= 0x00; //ADCTRIG0- Software only
+//	AdcRegs.ADCSOC13CTL.bit.TRIGSEL 	= 0x00;
 //	AdcRegs.ADCSOC14CTL.bit.TRIGSEL 	= 0x00;
 //	AdcRegs.ADCSOC15CTL.bit.TRIGSEL 	= 0x00;
 // 6+13ADC时钟周期

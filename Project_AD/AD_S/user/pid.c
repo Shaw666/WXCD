@@ -69,13 +69,11 @@ void PID_Control_F(void)     //频率环
 //	gai(F_OUT);
 	}	
 }
-
+u16 temp[6],count=0;
 void PID_Control_V(void)     //电压环
 {
-
-	PID_V.MySetPoint =2.8*4095/3.3;
-		//36*97.54;                 //12*4095/24/3.3;    620.4
-	PID_V.Input = (*ADResReg[15]);  //  输入为输出电压
+	PID_V.MySetPoint =220;
+	PID_V.Input = ((temp[2]<<8)|temp[3]);  //  输入为输出电压
 	
 	PID_V.Error = PID_V.MySetPoint-PID_V.Input; 
 	
@@ -90,17 +88,30 @@ void PID_Control_V(void)     //电压环
 	EPwm1Regs.CMPB = 1500-V_OUT;
 }
 
+
+//#################################################
+//串口接收中断函数
+//采用FIFO机制（缓存）
+//SCI_FIFO_LEN 定义为 1，最大为4
+//-----------------------------------------------
+interrupt void uartRx_isr(void) {
+
+	if (SciaRegs.SCIFFRX.bit.RXFFST == 1){
+	temp[count] = SciaRegs.SCIRXBUF.bit.RXDT;
+	SciaRegs.SCITXBUF = temp[count];
+	count++;
+	if(count==6) count=0;
+	}
+
+	SciaRegs.SCIFFRX.bit.RXFFINTCLR = 1;   // Clear Interrupt flag
+	PieCtrlRegs.PIEACK.bit.ACK9 = 1;
+}
+
+
 __interrupt void cpu_timer1_isr(void)
 {
-   CpuTimer1.InterruptCount++;
-   if(CpuTimer1.InterruptCount%20==0)
-   {
-	   CpuTimer1.InterruptCount=0;
-//	   PID_Control_V();
-	   Upper_Uart();
-   }
-  // Acknowledge this interrupt to receive more interrupts from group 1
-   EDIS;
+	EDIS;
+	PID_Control_V();
 }
 
 
@@ -108,8 +119,8 @@ unsigned char Send_Count; //串口需要发送的数据个数
 int j=0;     //串口发送数据计数
 void Upper_Uart(void)//上位机发送程序
 {
-	DataScope_Get_Channel_Data(*ADResReg[8],1);   //将电压环PID输入 写入通道 1
-	DataScope_Get_Channel_Data(*ADResReg[9]*3.3/4095.0,2);   //将电压环PID输入 写入通道 1
+	DataScope_Get_Channel_Data(PID_V.Input,1);   //将电压环PID输入 写入通道 1
+	DataScope_Get_Channel_Data(*ADResReg[9],2);   //将电压环PID输入 写入通道 1
 //	DataScope_Get_Channel_Data(*ADResReg[13]*3.3/4095.0,3);   //将电压环PID输入 写入通道 1
 //	DataScope_Get_Channel_Data(*ADResReg[12]*3.3/4095.0,4);   //将电压环PID输入 写入通道 1
 
@@ -119,9 +130,6 @@ void Upper_Uart(void)//上位机发送程序
 	Send_Count = DataScope_Data_Generate(2); //生成4个通道的 格式化帧数据，返回帧数据长度
     for( j = 0;j<Send_Count;j++)  //循环发送,直到发送完毕
 	{
-//    	while (SciaRegs.SCIFFTX.bit.TXFFST != 0);
-//		SciaRegs.SCITXBUF=DataScope_OutPut_Buffer[j];
-
 	while(LinaRegs.SCIFLR.bit.TXRDY == 0);
 	//Begin transmission
 	LinaRegs.SCITD = DataScope_OutPut_Buffer[j];
