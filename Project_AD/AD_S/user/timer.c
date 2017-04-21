@@ -66,12 +66,6 @@ __interrupt void cpu_timer0_isr(void)
    timer0Base.msCounter++;
    timer0Base.Mark_Para.Status_Bits.OnemsdFlag = 1;
 
-   //串口通讯处理
-   if(SCI_Msg.Mark_Para.Status_Bits.rFifoDataflag == 1)
-   {
-	   SCI_Msg.timerOut++;
-   }
-
    // Acknowledge this interrupt to receive more interrupts from group 1
 	EALLOW;
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;

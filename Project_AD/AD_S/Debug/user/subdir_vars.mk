@@ -10,7 +10,7 @@ C_SRCS += \
 ../user/Exint.c \
 ../user/TM1650_IIC.c \
 ../user/ad.c \
-../user/led.c \
+../user/gpio.c \
 ../user/main.c \
 ../user/pid.c \
 ../user/printf_uart.c \
@@ -24,7 +24,7 @@ OBJS += \
 ./user/Exint.obj \
 ./user/TM1650_IIC.obj \
 ./user/ad.obj \
-./user/led.obj \
+./user/gpio.obj \
 ./user/main.obj \
 ./user/pid.obj \
 ./user/printf_uart.obj \
@@ -37,7 +37,7 @@ C_DEPS += \
 ./user/Exint.pp \
 ./user/TM1650_IIC.pp \
 ./user/ad.pp \
-./user/led.pp \
+./user/gpio.pp \
 ./user/main.pp \
 ./user/pid.pp \
 ./user/printf_uart.pp \
@@ -53,7 +53,7 @@ C_DEPS__QUOTED += \
 "user\Exint.pp" \
 "user\TM1650_IIC.pp" \
 "user\ad.pp" \
-"user\led.pp" \
+"user\gpio.pp" \
 "user\main.pp" \
 "user\pid.pp" \
 "user\printf_uart.pp" \
@@ -70,7 +70,7 @@ OBJS__QUOTED += \
 "user\Exint.obj" \
 "user\TM1650_IIC.obj" \
 "user\ad.obj" \
-"user\led.obj" \
+"user\gpio.obj" \
 "user\main.obj" \
 "user\pid.obj" \
 "user\printf_uart.obj" \
@@ -86,7 +86,7 @@ C_SRCS__QUOTED += \
 "../user/Exint.c" \
 "../user/TM1650_IIC.c" \
 "../user/ad.c" \
-"../user/led.c" \
+"../user/gpio.c" \
 "../user/main.c" \
 "../user/pid.c" \
 "../user/printf_uart.c" \

@@ -10,7 +10,7 @@
 
 void EPWM1_Config(Uint16 period);
 void EPWM2_Config(u16 period);
-void InitEPwm1Example(void);
-void InitEPwm2Example(void);
+void InitEPwm1(void);
+void InitEPwm2(void);
 
 #endif /* PWM_H_ */

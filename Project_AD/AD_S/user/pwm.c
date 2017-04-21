@@ -109,7 +109,7 @@ void EPWM2_Config(u16 period) {
 }
 
 u32 EPWM1_TIMER_TBPRD=3000;
-void InitEPwm1Example(void)
+void InitEPwm1(void)
 {
 	InitEPwm1Gpio();
 
@@ -132,6 +132,8 @@ void InitEPwm1Example(void)
 
    	EPwm1Regs.AQCTLA.bit.ZRO = AQ_SET; 				// set actions for EPWM1Ai
    	EPwm1Regs.AQCTLA.bit.CAU = AQ_CLEAR;
+	EPwm1Regs.AQCTLB.bit.ZRO = AQ_CLEAR; 					// set actions for EPWM2Ai
+	EPwm1Regs.AQCTLB.bit.CAU = AQ_SET;
 
    	EPwm1Regs.DBCTL.bit.IN_MODE = DBA_ALL; 			// EPWMxA In (from the action-qualifier) is the source for both falling-edge and rising-edge delay.
    	EPwm1Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC; 		// Active Hi complementary
@@ -148,7 +150,7 @@ void InitEPwm1Example(void)
 }
 
 
-void InitEPwm2Example(void)
+void InitEPwm2(void)
 {
 
 	InitEPwm2Gpio();
@@ -170,8 +172,10 @@ void InitEPwm2Example(void)
 	EPwm2Regs.CMPCTL.bit.LOADAMODE = CC_CTR_ZERO; 		// load on CTR=Zero
 	EPwm2Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO; 		// load on CTR=Zero
 
-	EPwm2Regs.AQCTLA.bit.ZRO = AQ_SET; 					// set actions for EPWM2Ai
-	EPwm2Regs.AQCTLA.bit.CAU = AQ_CLEAR;
+	EPwm2Regs.AQCTLB.bit.ZRO = AQ_SET; 					// set actions for EPWM2Ai
+	EPwm2Regs.AQCTLB.bit.CAU = AQ_CLEAR;
+	EPwm2Regs.AQCTLA.bit.ZRO = AQ_CLEAR; 					// set actions for EPWM2Ai
+	EPwm2Regs.AQCTLA.bit.CAU = AQ_SET;
 
    	EPwm2Regs.DBCTL.bit.IN_MODE = DBA_ALL; 				// EPWMxA In (from the action-qualifier) is the source for both falling-edge and rising-edge delay.
    	EPwm2Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC; 			// Active Hi complementary

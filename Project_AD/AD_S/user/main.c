@@ -15,7 +15,7 @@
 void InitLED(void);
 
 Uint16 Error;
-Uint16 Tmp = 0,i=0;
+Uint16 Tmp = 0,i=180;
 u8 key=0;
 extern Uint16 RamfuncsLoadSize;
 
@@ -46,7 +46,7 @@ void main(void) {
 	SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC =0;
 	EDIS;
 	Timer0_init(); //初始化定时器0用于定时处理相关任务
-	Timer1_init(); //初始化定时器1用于定时处理PID 区别收发
+//	Timer1_init(); //初始化定时器1用于定时处理PID 区别收发
 
 	SCI_Init(115200);   //初始化SCI
 	SetupSCI(128000);
@@ -59,8 +59,8 @@ void main(void) {
 
 //	EPWM1_Config(1500);         //初始化PWM20k 1us死区 区别收发
 //	EPWM2_Config(1500);
-	InitEPwm1Example();         //移相全桥
-	InitEPwm2Example();
+	InitEPwm1();         //移相全桥
+	InitEPwm2();
 
 	EALLOW;
 	SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC =1;
@@ -95,14 +95,14 @@ void main(void) {
     		case 0x08:	{GpioDataRegs.GPASET.bit.GPIO5 = 0;	break;}	//GPIO10输出高电平
     		}
     		}
-			if(timer0Base.msCounter >= 1000)//ms
+			if(timer0Base.msCounter >= 100)//ms
 			{
 				Upper_Uart();
 //				scia_xmit(0x01);
-				i+=1;
+				i-=1;
 				timer0Base.msCounter = 0;
 				EPwm2Regs.TBPHS.half.TBPHS = 8.3*i;
-				if(i>180)i=1;
+				if(i<=0)i=180;
 			}
     	  }
 

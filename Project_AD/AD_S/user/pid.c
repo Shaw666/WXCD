@@ -100,7 +100,13 @@ interrupt void uartRx_isr(void) {
 	temp[count] = SciaRegs.SCIRXBUF.bit.RXDT;
 	SciaRegs.SCITXBUF = temp[count];
 	count++;
-	if(count==6) count=0;
+	if(count==6) {count=0;}
+	if(temp[0]==0xAA){
+
+	}
+	else if(temp[0]==0xA5){
+
+	}
 	}
 
 	SciaRegs.SCIFFRX.bit.RXFFINTCLR = 1;   // Clear Interrupt flag

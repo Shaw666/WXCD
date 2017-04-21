@@ -4,43 +4,12 @@
 #include <stdio.h>
 #include <file.h>
 
-#define SCIBaudRate   128000L
 #define TIMEROUTSCI (Uint32)10*(SYSCLK/SCIBaudRate) //估算的等待超时时间，请根据实际修改
 
 #define RTU_TIMEROUT 5 //ms
 
 #define SCI_FIFO_LEN  3 //定义DSP串口FIFO深度
 
-
-#define UartRxLEN 20  //接收缓存长度
-#define UartTxLEN 20  //发送缓存长度
-
-
-typedef struct Uart_Type{
-	union
-	  {
-	    Uint16 All;
-	    struct{
-	            Uint16  UartRevFlag           :1;  //接收到数据标志
-	            Uint16  HWOVFlag               :1;  //DSP硬件接收数据溢出标志
-
-	            Uint16  rFifoDataflag            :1;  //接收内存非空
-	            Uint16  rFifoFullflag            :1;  //接收内存溢出
-
-	            Uint16  DISRevflag                 :1;  //接收关闭
-
-	    		}Status_Bits;
-	  	}Mark_Para;
-
-	char rxData[UartRxLEN];						//接收缓存
-	Uint16 rxReadIndex;                         //接收FIFO写入索引
-	Uint16 rxWriteIndex;                        //接收FIFO读出索引
-
-	Uint16 timerOut;                            //超时判断
-}
-Uart_Msg; 
-
-extern Uart_Msg SCI_Msg;
 
 interrupt void uartRx_isr(void);
 

@@ -25,68 +25,6 @@
  }
  */
 
-Uart_Msg SCI_Msg = { 0, { 0 }, 0, 0, 0 };
-
-//#################################################
-//串口接收缓存处理函数
-//-----------------------------------------------
-void handleRxFIFO() {
-	Uint16 wrIndex = 0;
-
-	if (SCI_Msg.Mark_Para.Status_Bits.rFifoDataflag == 1) {
-		SCI_Msg.Mark_Para.Status_Bits.rFifoDataflag = 0;
-		while (SCI_Msg.rxReadIndex != SCI_Msg.rxWriteIndex) {
-			//这里处理接收到的数据
-			wrIndex =
-					(SCI_Msg.rxWriteIndex != 0) ?
-							(SCI_Msg.rxWriteIndex - 1) : (UartRxLEN - 1); //获取写入FIFO指针，上传到PC
-			printf("\r\nrxData[%d] = %c ; wr:%d", SCI_Msg.rxReadIndex,
-					SCI_Msg.rxData[SCI_Msg.rxReadIndex], wrIndex);
-			//串口点亮LED
-			switch (SCI_Msg.rxData[SCI_Msg.rxReadIndex]) {
-			case 0x01:
-				D401TOGGLE();
-				break;
-			case 0x02:
-				D402TOGGLE();
-				break;
-			default:
-				break;
-			}
-			SCI_Msg.rxReadIndex = (++SCI_Msg.rxReadIndex) % (UartRxLEN);
-		}
-
-	}
-
-	//这里做缓存溢出处理
-	if (SCI_Msg.Mark_Para.Status_Bits.rFifoFullflag == 1) {
-		SCI_Msg.Mark_Para.Status_Bits.rFifoFullflag = 0;
-		printf(
-				"\r\n---------------FIFO overflow-------------------------------------");
-
-		SCI_Msg.rxReadIndex = 0;
-		SCI_Msg.rxWriteIndex = 0; //SCI_Msg.rxReadIndex;
-	}
-
-	//这里做硬件串口接收溢出处理
-	if (SCI_Msg.Mark_Para.Status_Bits.HWOVFlag == 1) {
-		SCI_Msg.Mark_Para.Status_Bits.HWOVFlag = 0;
-		printf(
-				"\r\n---------------SCI HW Overflow ISR Clear-------------------------");
-	}
-
-	//扫描硬件FIFO溢出处理
-	if (SciaRegs.SCIFFRX.bit.RXFFOVF == 1) {
-		SciaRegs.SCIFFRX.bit.RXFFOVRCLR = 1;
-		SciaRegs.SCIFFRX.bit.RXFIFORESET = 0; //Write 0 to reset the FIFO pointer to zero, and hold in reset.
-		SciaRegs.SCIFFRX.bit.RXFIFORESET = 1; //Re-enable receive FIFO operation
-		printf(
-				"\r\n---------------Mannul HW Overflow  Clear------------------------");
-
-	}
-}
-
-
 //#################################################
 //-----------------------------------------------
 //串口初始化
@@ -140,14 +78,8 @@ void SCI_Init(Uint32 buad) {
 void scia_xmit(int a) {
 	Uint32 WaitTimer = 0;
 
-	while (SciaRegs.SCIFFTX.bit.TXFFST != 0)
+	while (SciaRegs.SCIFFTX.bit.TXFFST != 0);
 	//while(SciaRegs.SCICTL2.bit.TXEMPTY != 1)
-	{
-		WaitTimer++;
-		if (WaitTimer > TIMEROUTSCI)
-			break;
-	}
-	if (WaitTimer <= TIMEROUTSCI)
 		SciaRegs.SCITXBUF = a;
 }
 
