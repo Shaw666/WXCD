@@ -12,6 +12,7 @@
 
 
 interrupt void uartRx_isr(void);
+void ResponseSCI(Uint16* tmp);
 
 //--------------------------------------------------------------------
 void handleRxFIFO(void);

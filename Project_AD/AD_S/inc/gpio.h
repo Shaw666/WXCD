@@ -36,7 +36,6 @@
 extern u8 key;
 
 void GPIO_INit(void);
-void KEY_Init(void);
 void DIP_Scan(void);
 u8 STOP_Scan(void);
 #endif /* LED_H_ */

@@ -4,8 +4,7 @@
  *  Created on: 2014-8-7
  *      Author: MÐÂ¶¯Á¦
  */
-#include "DSP28x_Project.h"     // Device Headerfile and Examples Include File
-#include "HK_all_include.h"
+#include "Module_Project.h"
 
 char keyVal,LigntVal;
 I2CSlaveMSG MCP79411;

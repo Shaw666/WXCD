@@ -8,12 +8,13 @@ C_UPPER_SRCS += \
 
 C_SRCS += \
 ../user/Exint.c \
-../user/TM1650_IIC.c \
+../user/GlobalVariableDefandInits.c \
 ../user/ad.c \
+../user/communicationSci.c \
 ../user/gpio.c \
+../user/hardiic.c \
 ../user/main.c \
 ../user/pid.c \
-../user/printf_uart.c \
 ../user/pwm.c \
 ../user/sim_spi.c \
 ../user/timer.c \
@@ -22,12 +23,13 @@ C_SRCS += \
 OBJS += \
 ./user/DataScope_DP.obj \
 ./user/Exint.obj \
-./user/TM1650_IIC.obj \
+./user/GlobalVariableDefandInits.obj \
 ./user/ad.obj \
+./user/communicationSci.obj \
 ./user/gpio.obj \
+./user/hardiic.obj \
 ./user/main.obj \
 ./user/pid.obj \
-./user/printf_uart.obj \
 ./user/pwm.obj \
 ./user/sim_spi.obj \
 ./user/timer.obj \
@@ -35,12 +37,13 @@ OBJS += \
 
 C_DEPS += \
 ./user/Exint.pp \
-./user/TM1650_IIC.pp \
+./user/GlobalVariableDefandInits.pp \
 ./user/ad.pp \
+./user/communicationSci.pp \
 ./user/gpio.pp \
+./user/hardiic.pp \
 ./user/main.pp \
 ./user/pid.pp \
-./user/printf_uart.pp \
 ./user/pwm.pp \
 ./user/sim_spi.pp \
 ./user/timer.pp \
@@ -51,12 +54,13 @@ C_UPPER_DEPS += \
 
 C_DEPS__QUOTED += \
 "user\Exint.pp" \
-"user\TM1650_IIC.pp" \
+"user\GlobalVariableDefandInits.pp" \
 "user\ad.pp" \
+"user\communicationSci.pp" \
 "user\gpio.pp" \
+"user\hardiic.pp" \
 "user\main.pp" \
 "user\pid.pp" \
-"user\printf_uart.pp" \
 "user\pwm.pp" \
 "user\sim_spi.pp" \
 "user\timer.pp" \
@@ -68,12 +72,13 @@ C_UPPER_DEPS__QUOTED += \
 OBJS__QUOTED += \
 "user\DataScope_DP.obj" \
 "user\Exint.obj" \
-"user\TM1650_IIC.obj" \
+"user\GlobalVariableDefandInits.obj" \
 "user\ad.obj" \
+"user\communicationSci.obj" \
 "user\gpio.obj" \
+"user\hardiic.obj" \
 "user\main.obj" \
 "user\pid.obj" \
-"user\printf_uart.obj" \
 "user\pwm.obj" \
 "user\sim_spi.obj" \
 "user\timer.obj" \
@@ -84,12 +89,13 @@ C_UPPER_SRCS__QUOTED += \
 
 C_SRCS__QUOTED += \
 "../user/Exint.c" \
-"../user/TM1650_IIC.c" \
+"../user/GlobalVariableDefandInits.c" \
 "../user/ad.c" \
+"../user/communicationSci.c" \
 "../user/gpio.c" \
+"../user/hardiic.c" \
 "../user/main.c" \
 "../user/pid.c" \
-"../user/printf_uart.c" \
 "../user/pwm.c" \
 "../user/sim_spi.c" \
 "../user/timer.c" \

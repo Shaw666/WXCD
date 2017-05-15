@@ -4,135 +4,173 @@
  *  Created on: 2017-3-21
  *      Author: Shaw
  */
-#include "DSP28x_Project.h"     // Device Headerfile and Examples Include File
-#include "HK_all_include.h"
-/*
-//接收端LED初始化
+#include "Module_Project.h"
+
 void GPIO_INit(void)
 {
+	   // GPAPUD  --0 Enable       1    Disable    (default for GPIO12-GPIO44=0)
+	   //                                                             (default for GPIO0-GPIO11=1)
+	   // GPAMUXx --0 GPIO       other  Function   (default=0)
+	   // GPADIR  --0 Input        1    Output     (default=0)
 	EALLOW;
-	//GPIO寄存器受保护   LED1  2   3
-	GpioCtrlRegs.GPAMUX1.bit.GPIO4  = 0;	//GPIO4作为普通IO
-	GpioCtrlRegs.GPAMUX1.bit.GPIO5  = 0;	//GPIO5作为普通IO
-	GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 0;	//GPIO10作为普通IO
+	   //GPIO0----PWMA
+	   GpioCtrlRegs.GPAPUD.bit.GPIO0     		= 1;      // Disable  pull-up on GPIO0
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO0    		= 1;      // Configure GPIO0 as EPWM1A
+	   //GPIO1----PWMB
+	   GpioCtrlRegs.GPAPUD.bit.GPIO1     		= 1;      // Disable pull-up on GPIO1
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO1    		= 1;      // Configure GPIO1 as EPWM1B
+	   //GPIO2----PWMC_Unused
+	   GpioCtrlRegs.GPAPUD.bit.GPIO2     		= 1;      // Disable  pull-up on GPIO2
+	   GpioDataRegs.GPACLEAR.bit.GPIO2   	= 1;      // Load output latch low
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO2    		= 1;      // Configure GPIO2 as GPIO2
+	   GpioCtrlRegs.GPADIR.bit.GPIO2     		= 0;      // Direction is is
 
-	GpioCtrlRegs.GPADIR.bit.GPIO4  = 1;		//GPIO4方向为输出
-	GpioCtrlRegs.GPADIR.bit.GPIO5  = 1;		//GPIO5方向为输出
-	GpioCtrlRegs.GPADIR.bit.GPIO10 = 1;		//GPIO10方向为输出
+	   //GPIO3----PWMD_Unused
+	   GpioCtrlRegs.GPAPUD.bit.GPIO3  		= 1;      // Disable  pull-up on GPIO3
+	  GpioDataRegs.GPACLEAR.bit.GPIO3   	= 1;      // Load output latch low
+	  GpioCtrlRegs.GPAMUX1.bit.GPIO3    		= 1;      // Configure GPIO3 as GPIO3
+	  GpioCtrlRegs.GPADIR.bit.GPIO3     		= 1;      // Direction is output
 
-	GpioDataRegs.GPASET.bit.GPIO4 = 1;		//GPIO4输出高电平
-	GpioDataRegs.GPASET.bit.GPIO5 = 1;  	//GPIO5输出高电平
-	GpioDataRegs.GPASET.bit.GPIO10 = 1;		//GPIO10输出高电平
-	//继电器控制初始化   继电器高电平闭合
-	GpioCtrlRegs.GPAMUX1.bit.GPIO11  = 0;	//GPIO11作为普通IO
-	GpioCtrlRegs.GPADIR.bit.GPIO11  = 1;		//GPIO11方向为输出
-	GpioDataRegs.GPACLEAR.bit.GPIO11 = 1;		//GPIO11输出低电平
+	 //GPIO4----emergence stop
+	  GpioCtrlRegs.GPAPUD.bit.GPIO4     		= 1;      // Disable  pull-up on GPIO4
+	  GpioDataRegs.GPACLEAR.bit.GPIO4   	= 1;      // Load output latch low
+	  GpioCtrlRegs.GPAMUX1.bit.GPIO4    		= 0;      // Configure GPIO4 as GPIO4
+	  GpioCtrlRegs.GPADIR.bit.GPIO4    		= 0;      // Direction is output
+	//GPIO5----FAN Control
+	  GpioCtrlRegs.GPAPUD.bit.GPIO5     		= 1;      // Disable  pull-up on GPIO5
+	  GpioDataRegs.GPACLEAR.bit.GPIO5   	= 1;      // Load output latch low
+	  GpioCtrlRegs.GPAMUX1.bit.GPIO5    		= 0;      // Configure GPIO5 as GPIO5
+	  GpioCtrlRegs.GPADIR.bit.GPIO5     		= 1;      // Direction is output
 
-	EDIS;
-}
-*/
+	 //GPIO6----ZigBee_WAKE
+	  GpioCtrlRegs.GPAPUD.bit.GPIO6     		= 1;      // Disable  pull-up on GPIO6
+	  GpioDataRegs.GPASET.bit.GPIO9             = 1;	     // Load output latch high
+	  GpioCtrlRegs.GPAMUX1.bit.GPIO6    		= 0;      // Configure GPIO6 as GPIO6
+	  GpioCtrlRegs.GPADIR.bit.GPIO6     		= 1;      // Direction is output
+	   //GPIO9----ZigBee_RST
+	   GpioCtrlRegs.GPAPUD.bit.GPIO9     		= 1;      // Disable  pull-up on GPIO9
+	   GpioDataRegs.GPASET.bit.GPIO9            = 1;	     // Load output latch High
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO9    		= 0;      // Configure GPIO9 as GPIO9
+	   GpioCtrlRegs.GPADIR.bit.GPIO9     		= 1;      // Direction is output
+	   //GPIO28---ZigBee_RX(SCI-A)
+	   GpioCtrlRegs.GPAPUD.bit.GPIO28    		= 0;      // Disable  pull-up on GPIO28
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO28   	= 1;      // Configure GPIO28 as SCIRX
+	   GpioCtrlRegs.GPAQSEL2.bit.GPIO28         = 3;     // Asynch input GPIO28 (SCIRXDA)
+	   //GPIO29---ZigBee_TX(SCI-A)
+	   GpioCtrlRegs.GPAPUD.bit.GPIO29    		= 0;      // Enable  pull-up on GPIO29
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO29   	= 1;      // Configure GPIO29 as SCITX
+	   GpioCtrlRegs.GPAQSEL2.bit.GPIO29  	= 3;      // Asynch input
 
-///*
-//发射端LED初始化
-void GPIO_INit(void)
-{
-	EALLOW;
-	//GPIO寄存器受保护   LED 1 2 3 4 --- GPIO9 16 17 34  初始化1111
-	GpioCtrlRegs.GPAMUX1.bit.GPIO9  = 0;
-	GpioCtrlRegs.GPAMUX2.bit.GPIO16  = 0;
-	GpioCtrlRegs.GPAMUX2.bit.GPIO17 = 0;
-	GpioCtrlRegs.GPBMUX1.bit.GPIO34 = 0;
+	 //GPIO7----Switch -3
+	  GpioCtrlRegs.GPAPUD.bit.GPIO7    		= 1;      // Disable  pull-up on GPIO7
+	  GpioCtrlRegs.GPAMUX1.bit.GPIO7    		= 0;      // Configure GPIO7 as GPIO7
+	  GpioCtrlRegs.GPADIR.bit.GPIO7     		= 0;      // Direction is input
+	  GpioCtrlRegs.GPAQSEL1.bit.GPIO7           = 0;   // 引脚采样与系统时钟同步
+	 //GPIO8----Switch -1
+	  GpioCtrlRegs.GPAPUD.bit.GPIO8    		= 1;      // Disable  pull-up on GPIO8
+	  GpioCtrlRegs.GPAMUX1.bit.GPIO8    		= 0;      // Configure GPIO8 as GPIO8
+	  GpioCtrlRegs.GPADIR.bit.GPIO8     		= 0;      // Direction is input
+	  GpioCtrlRegs.GPAQSEL1.bit.GPIO8           = 0;   // 引脚采样与系统时钟同步
+	   //GPIO12---Switch -2
+	   GpioCtrlRegs.GPAPUD.bit.GPIO12    		= 1;      // Disable pullup on GPIO12
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO12   	= 0;      // Configure GPIO12 as GPIO
+	   GpioCtrlRegs.GPADIR.bit.GPIO12    		= 0;      // Direction is input
+	   GpioCtrlRegs.GPAQSEL1.bit.GPIO12        = 0;   // 引脚采样与系统时钟同步
+	   //GPIO22---Switch -4
+	   GpioCtrlRegs.GPAPUD.bit.GPIO22    		= 1;      // Disable  pull-up on GPIO22
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO22   	= 0;      // Configure GPIO22 as GPIO
+	   GpioCtrlRegs.GPADIR.bit.GPIO22    		= 0;      // Direction is input
+	   GpioCtrlRegs.GPAQSEL2.bit.GPIO22        = 0;   // 引脚采样与系统时钟同步
 
-	GpioCtrlRegs.GPADIR.bit.GPIO9  = 1;
-	GpioCtrlRegs.GPADIR.bit.GPIO16  = 1;
-	GpioCtrlRegs.GPADIR.bit.GPIO17 = 1;
-	GpioCtrlRegs.GPBDIR.bit.GPIO34 = 1;
+	   //GPIO10---PFC_CLS
+	   GpioCtrlRegs.GPAPUD.bit.GPIO10    		= 1;      // Disable  pull-up on GPIO10
+	   GpioDataRegs.GPACLEAR.bit.GPIO10   	= 1;      // Load output latch low
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO10   	= 0;      // Configure GPIO10 as GPIO10
+	   GpioCtrlRegs.GPADIR.bit.GPIO10     		= 1;      // Direction is output
+	   //GPIO11---Relay-Control
+	   GpioCtrlRegs.GPAPUD.bit.GPIO11    	 	= 0;      	// Ensable  pull-up on GPIO11
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO11     	= 0;      	// Configure GPIO11 as GPIO11
+	   GpioCtrlRegs.GPADIR.bit.GPIO11     	 	= 1;      	// Direction is output
+	   GpioDataRegs.GPACLEAR.bit.GPIO11       = 1;      // Load output latch low
 
-	GpioDataRegs.GPASET.bit.GPIO9 = 1;
-	GpioDataRegs.GPASET.bit.GPIO16 = 1;
-	GpioDataRegs.GPASET.bit.GPIO17 = 1;
-	GpioDataRegs.GPBSET.bit.GPIO34 = 1;
-	//继电器控制初始化   继电器高电平闭合  初始化0
-	GpioCtrlRegs.GPAMUX1.bit.GPIO11  = 0;	//GPIO11作为普通IO
-	GpioCtrlRegs.GPADIR.bit.GPIO11  = 1;		//GPIO11方向为输出
-	GpioDataRegs.GPACLEAR.bit.GPIO11 = 1;		//GPIO11输出低电平
-	//风扇控制初始化  高地平有效打开风扇  初始化0
-	GpioCtrlRegs.GPAMUX1.bit.GPIO5  = 0;	//GPIO11作为普通IO
-	GpioCtrlRegs.GPADIR.bit.GPIO5  = 1;		//GPIO11方向为输出
-	GpioDataRegs.GPACLEAR.bit.GPIO5 = 1;		//GPIO11输出低电平
-	EDIS;
-}
-//*/
 
-/*
-//接收端拨码按键初始化
-void KEY_Init(void)
-{
-	EALLOW;	//GPIO寄存器受保护   拨码开关 1  2  3  4 --- GPIO0 1 3 22
-	GpioCtrlRegs.GPAMUX2.bit.GPIO22= 0;		//GPIO27作为普通IO
-	GpioCtrlRegs.GPADIR.bit.GPIO22 = 0;		//GPIO27方向为输入
-	GpioCtrlRegs.GPAPUD.bit.GPIO22 = 1;		//开启内部上拉
-	GpioCtrlRegs.GPAQSEL2.bit.GPIO22 = 0;   // 引脚采样与系统时钟同步
+	   //GPIO13 GPIO14 GPIO15-- Have NO!
 
-	GpioCtrlRegs.GPAMUX1.bit.GPIO0  = 0;		//GPIO0作为普通IO
-	GpioCtrlRegs.GPADIR.bit.GPIO0   = 0;		//GPIO0方向为输入
-	GpioCtrlRegs.GPAPUD.bit.GPIO0   = 1;		//开启内部上拉
-	GpioCtrlRegs.GPAQSEL1.bit.GPIO0 = 0;   // 引脚采样与系统时钟同步
+	   //GPIO16---LED1_3.3V
+	   GpioCtrlRegs.GPAPUD.bit.GPIO16    		= 0;      // Enable pullup on GPIO16
+	   GpioDataRegs.GPASET.bit.GPIO16          = 1;              // Load output latch high
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO16   	= 0;      // Configure GPIO16 as GPIO
+	   GpioCtrlRegs.GPADIR.bit.GPIO16    		= 1;      // Direction is output
+	   //GPIO34---LED2
+	   GpioCtrlRegs.GPBPUD.bit.GPIO34    		= 1;      // Disable pullup on GPIO34
+	   GpioCtrlRegs.GPBMUX1.bit.GPIO34   	= 0;      // Configure GPIO34 as GPIO34
+	   GpioCtrlRegs.GPBDIR.bit.GPIO34    		= 1;      // Direction is input
+	   GpioDataRegs.GPBSET.bit.GPIO34          = 1;
 
-	GpioCtrlRegs.GPAMUX1.bit.GPIO1  = 0;		//GPIO1作为普通IO
-	GpioCtrlRegs.GPADIR.bit.GPIO1   = 0;		//GPIO1方向为输入
-	GpioCtrlRegs.GPAPUD.bit.GPIO1   = 1;		//开启内部上拉
-	GpioCtrlRegs.GPAQSEL1.bit.GPIO1 = 0;   // 引脚采样与系统时钟同步
 
-	GpioCtrlRegs.GPAMUX1.bit.GPIO3  = 0;		//GPIO3作为普通IO
-	GpioCtrlRegs.GPADIR.bit.GPIO3   = 0;		//GPIO3方向为输入
-	GpioCtrlRegs.GPAPUD.bit.GPIO3   = 1;		//开启内部上拉
-	GpioCtrlRegs.GPAQSEL1.bit.GPIO3 = 0;   // 引脚采样与系统时钟同步
-	//外部物理充电开关  高电平有效锁死
-	GpioCtrlRegs.GPAMUX1.bit.GPIO12  = 0;		//GPIO3作为普通IO
-	GpioCtrlRegs.GPADIR.bit.GPIO12   = 0;		//GPIO3方向为输入
-	GpioCtrlRegs.GPAPUD.bit.GPIO12   = 1;		//禁用内部上拉  外部下拉
-	GpioCtrlRegs.GPAQSEL1.bit.GPIO12 = 0;   // 引脚采样与系统时钟同步
-	//降压模块过压保护初始化  低电平保护
-	GpioCtrlRegs.GPAMUX1.bit.GPIO8  = 0;		//GPIO3作为普通IO
-	GpioCtrlRegs.GPADIR.bit.GPIO8   = 0;		//GPIO3方向为输入
-	GpioCtrlRegs.GPAPUD.bit.GPIO8   = 1;		//禁用内部上拉  外部下拉
-	GpioCtrlRegs.GPAQSEL1.bit.GPIO8 = 0;   // 引脚采样与系统时钟同步
-	EDIS;
-}
-*/
+	   //GPIO34---LED2
+	   GpioCtrlRegs.GPBPUD.bit.GPIO43   		= 1;      // Disable pullup on GPIO34
+	   GpioCtrlRegs.GPBMUX1.bit.GPIO43   	= 0;      // Configure GPIO34 as GPIO34
+	   GpioCtrlRegs.GPBDIR.bit.GPIO43   		= 1;      // Direction is input
+	   GpioDataRegs.GPBSET.bit.GPIO43          = 0;
 
-//发射端拨码按键初始化
-void KEY_Init(void)
-{
-	EALLOW;	//GPIO寄存器受保护   拨码开关 1  2  3  4 --- 7 12 18 22
-	//驱动模块异常保护  默认为高，异常后输出低电平
-	GpioCtrlRegs.GPAMUX2.bit.GPIO17  = 0;		//GPIO3作为普通IO
-	GpioCtrlRegs.GPADIR.bit.GPIO17   = 0;		//GPIO3方向为输入
-	GpioCtrlRegs.GPAPUD.bit.GPIO17   = 1;		//禁用内部上拉
-	GpioCtrlRegs.GPAQSEL2.bit.GPIO17 = 0;   // 引脚采样与系统时钟同步
 
-	GpioCtrlRegs.GPAMUX1.bit.GPIO7= 0;		//GPIO7作为普通IO
-	GpioCtrlRegs.GPADIR.bit.GPIO7 = 0;		//GPIO7方向为输入
-	GpioCtrlRegs.GPAPUD.bit.GPIO7 = 1;		//开启内部上拉
-	GpioCtrlRegs.GPAQSEL1.bit.GPIO7 = 0;   // 引脚采样与系统时钟同步
+	   //GPIO17---DRModul_Fualt
+	   GpioCtrlRegs.GPAPUD.bit.GPIO17    		= 0;      // Enable pullup on GPIO17
+	   GpioDataRegs.GPACLEAR.bit.GPIO17  	= 1;      // Load output latch low
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO17   	= 0;      // Configure GPIO17 as GPIO
+	   GpioCtrlRegs.GPADIR.bit.GPIO17    		= 0;      // Direction is input
+	   GpioCtrlRegs.GPAQSEL2.bit.GPIO17  	= 3;      // asynch input
 
-	GpioCtrlRegs.GPAMUX1.bit.GPIO12  = 0;		//GPIO12作为普通IO
-	GpioCtrlRegs.GPADIR.bit.GPIO12   = 0;		//GPIO12方向为输入
-	GpioCtrlRegs.GPAPUD.bit.GPIO12   = 1;		//开启内部上拉
-	GpioCtrlRegs.GPAQSEL1.bit.GPIO12 = 0;   // 引脚采样与系统时钟同步
+	   //GPIO18 19---USART_TX  USART_RX
+		GpioCtrlRegs.GPAPUD.bit.GPIO18 = 0;		// Enable pull-up for GPIO22 (LIN TX)
+		GpioCtrlRegs.GPAPUD.bit.GPIO19 = 0;		// Enable pull-up for GPIO23 (LIN RX)
+		GpioCtrlRegs.GPAQSEL2.bit.GPIO19 = 3;  // Asynch input GPIO23 (LINRXA)
+		GpioCtrlRegs.GPAMUX2.bit.GPIO18 = 2;   // Configure GPIO19 for LIN TX operation	 (3-Enable,0-Disable)
+		GpioCtrlRegs.GPAMUX2.bit.GPIO19 = 2;   // Configure GPIO23 for LIN RX operati
 
-	GpioCtrlRegs.GPAMUX2.bit.GPIO18  = 0;		//GPIO18作为普通IO
-	GpioCtrlRegs.GPADIR.bit.GPIO18   = 0;		//GPIO18方向为输入
-	GpioCtrlRegs.GPAPUD.bit.GPIO18   = 1;		//开启内部上拉
-	GpioCtrlRegs.GPAQSEL2.bit.GPIO18 = 0;   // 引脚采样与系统时钟同步
+	   //GPIO20---Flash_SDI_Unused
+	   GpioCtrlRegs.GPAPUD.bit.GPIO20    		= 1;      // Disable  pull-up on GPIO20
+	   GpioDataRegs.GPACLEAR.bit.GPIO20  	= 1;      // Load output latch low
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO20   	= 0;      // Configure GPIO20 as GPIO
+	   GpioCtrlRegs.GPADIR.bit.GPIO20    		= 1;      // Direction is output
+	   //GPIO21---Flash_CLK_Unused
+	   GpioCtrlRegs.GPAPUD.bit.GPIO21    		= 1;      // Disable pullup on GPIO21
+	   GpioDataRegs.GPACLEAR.bit.GPIO21  	= 1;      // Load output latch low
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO21   	= 0;      // Configure GPIO21 as GPIO
+	   GpioCtrlRegs.GPADIR.bit.GPIO21    		= 1;      // Direction is output
+	   //GPIO23---Flash_CS_Unused
+	   GpioCtrlRegs.GPAPUD.bit.GPIO23    		= 1;      // Disable pullup on GPIO23
+	   GpioDataRegs.GPACLEAR.bit.GPIO23  	= 1;      // Load output latch low
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO23   	= 0;      // Configure GPIO23 as GPIO
+	   GpioCtrlRegs.GPADIR.bit.GPIO23    		= 1;      // Direction is output
+	   //GPIO24---Flash_SDO_Unused
+	   GpioCtrlRegs.GPAPUD.bit.GPIO24    		= 1;      // Enable pullup on GPIO24
+	   GpioDataRegs.GPACLEAR.bit.GPIO24  	= 1;      // Load output latch low
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO24   	= 0;      // Configure GPIO24 as GPIO
+	   GpioCtrlRegs.GPADIR.bit.GPIO24    		= 1;      // Direction is output
 
-	GpioCtrlRegs.GPAMUX2.bit.GPIO22  = 0;		//GPIO22作为普通IO
-	GpioCtrlRegs.GPADIR.bit.GPIO22   = 0;		//GPIO22方向为输入
-	GpioCtrlRegs.GPAPUD.bit.GPIO22   = 1;		//开启内部上拉
-	GpioCtrlRegs.GPAQSEL2.bit.GPIO22 = 0;   // 引脚采样与系统时钟同步
+	   //GPIO25,GPIO26,GPIO27--- Have NO!
 
-	EDIS;
+	   //GPIO30 GPIO31---(CANTXA CANRXA)GPIO
+	   GpioCtrlRegs.GPAPUD.bit.GPIO30    		= 0;      // Enable pullup on GPIO30
+	   GpioCtrlRegs.GPAPUD.bit.GPIO31    		= 0;      // Enable pullup on GPIO31
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO30   		= 1;      // Configure GPIO30 as CANTXA
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO31   		= 1;      // Configure GPIO31 as CANRXA
+	   GpioCtrlRegs.GPAQSEL2.bit.GPIO31  		= 3;      // Asynch input
+	   //GPIO32---RTC_SDAA_Unused
+	   GpioCtrlRegs.GPBPUD.bit.GPIO32    		= 1;      // Disable pullup on GPIO32
+	   GpioDataRegs.GPBCLEAR.bit.GPIO32  		= 1;      // Load output latch low
+	   GpioCtrlRegs.GPBMUX1.bit.GPIO32   		= 0;      // Configure GPIO32 as GPIO
+	   GpioCtrlRegs.GPBDIR.bit.GPIO32    			= 1;      // Direction is output
+	   //GPIO33---RTC_SCLA_Unused
+	   GpioCtrlRegs.GPBPUD.bit.GPIO33    		= 1;      // Disable pullup on GPIO33
+	   GpioDataRegs.GPBCLEAR.bit.GPIO33  		= 1;      // Load output latch low
+	   GpioCtrlRegs.GPBMUX1.bit.GPIO33   		= 0;      // Configure GPIO33 as GPIO
+	   GpioCtrlRegs.GPBDIR.bit.GPIO33    			= 1;      // Direction is output
+
+	   EDIS;
+
 }
 
 /*-----------------------------------------------------------
@@ -162,7 +200,7 @@ void DIP_Scan(void)
 	}
 }
 //发射端快速扫描
-u8 STOP_Scan(void)
+unsigned char STOP_Scan(void)
 {
 //发射端驱动异常检测
 	if(qdyckey()==0){
@@ -170,18 +208,4 @@ u8 STOP_Scan(void)
 	}
 	return 0;
 }
-//接收端快速扫描
-//u8 STOP_Scan(void)
-//{
-////开机扫描一次
-//	if(ISStart()==0){//外部物理充电开关  高电平有效锁死
-//		return Excep_kgdk;
-//	}
-//
-////接收端降压过压保护检测
-//	if(ISOver()==0){
-//		return Excep_jygy;
-//	}
-//	return 0;
-//}
 

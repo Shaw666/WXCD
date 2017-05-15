@@ -4,8 +4,7 @@
  *  Created on: 2017-3-20
  *      Author: Shaw
  */
-#include "DSP28x_Project.h"     // Device Headerfile and Examples Include File
-#include "HK_all_include.h"
+#include "Module_Project.h"
 
 void ExInt_Init(void);
 interrupt void xint1_isr(void);

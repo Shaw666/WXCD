@@ -1,8 +1,7 @@
 # FIXED
 
 user/Exint.obj: ../user/Exint.c
-user/Exint.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP28x_Project.h
-user/Exint.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_typedefs.h
+user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_headers/include/DSP2803x_Device.h
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_headers/include/DSP2803x_Adc.h
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_headers/include/DSP2803x_BootVars.h
@@ -31,14 +30,17 @@ user/Exint.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_EPwm_
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_I2c_defines.h
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_defines.h
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_DefaultISR.h
-user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/HK_all_include.h
+user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/GlobalVariableDefAndInits.h
+user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h
+user/Exint.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP28x_Project.h
+user/Exint.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_typedefs.h
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/timer.h
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/printf_uart.h
 user/Exint.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdio.h
 user/Exint.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/linkage.h
 user/Exint.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdarg.h
 user/Exint.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/file.h
-user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/TM1650_IIC.h
+user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/hardiic.h
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/ad.h
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/pid.h
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/DataScope_DP.h
@@ -49,8 +51,7 @@ user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/zm5168.h
 user/Exint.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/sim_spi.h
 
 ../user/Exint.c: 
-E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP28x_Project.h: 
-E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_typedefs.h: 
+E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h: 
 E:/workspace_v5_5/WXCD_FS/DSP2803x_headers/include/DSP2803x_Device.h: 
 E:/workspace_v5_5/WXCD_FS/DSP2803x_headers/include/DSP2803x_Adc.h: 
 E:/workspace_v5_5/WXCD_FS/DSP2803x_headers/include/DSP2803x_BootVars.h: 
@@ -79,14 +80,17 @@ E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_EPwm_defines.h:
 E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_I2c_defines.h: 
 E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_defines.h: 
 E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_DefaultISR.h: 
-E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/HK_all_include.h: 
+E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/GlobalVariableDefAndInits.h: 
+E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h: 
+E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP28x_Project.h: 
+E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_typedefs.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/timer.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/printf_uart.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdio.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/linkage.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdarg.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/file.h: 
-E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/TM1650_IIC.h: 
+E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/hardiic.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/ad.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/pid.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/DataScope_DP.h: 

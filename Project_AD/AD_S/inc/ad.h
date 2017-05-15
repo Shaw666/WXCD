@@ -16,5 +16,6 @@ extern volatile u16 *ADResReg[16];
 
 
 void ADC_Config(void);
+void ArbitramentProtect(void);
 
 #endif /* AD_H_ */

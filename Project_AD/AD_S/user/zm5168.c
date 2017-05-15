@@ -4,38 +4,12 @@
  *  Created on: 2017-3-24
  *      Author: Shaw
  */
+#include "Module_Project.h"
 
-#include "DSP28x_Project.h"     // Device Headerfile and Examples Include File
-#include "HK_all_include.h"
-
-void Init_LinaGpio()
-{
-   EALLOW;
-/* Enable internal pull-up for the selected pins */
-// Pull-ups can be enabled or disabled by the user.
-// This will enable the pullups for the specified pins.
-	GpioCtrlRegs.GPAPUD.bit.GPIO22 = 0;		// Enable pull-up for GPIO22 (LIN TX)
-	GpioCtrlRegs.GPAPUD.bit.GPIO23 = 0;		// Enable pull-up for GPIO23 (LIN RX)
-
-/* Set qualification for selected pins to asynch only */
-// Inputs are synchronized to SYSCLKOUT by default.
-// This will select asynch (no qualification) for the selected pins.
-	GpioCtrlRegs.GPAQSEL2.bit.GPIO23 = 3;  // Asynch input GPIO23 (LINRXA)
-
-/* Configure LIN-A pins using GPIO regs*/
-// This specifies which of the possible GPIO pins will be LIN pins.
-// Only one set of pins should be enabled at any time for LIN operation.
-	GpioCtrlRegs.GPAMUX2.bit.GPIO22 = 3;   // Configure GPIO19 for LIN TX operation	 (3-Enable,0-Disable)
-	GpioCtrlRegs.GPAMUX2.bit.GPIO23 = 3;   // Configure GPIO23 for LIN RX operation (3-Enable,0-Disable)
-
-    EDIS;
-}
 
 void SetupSCI(Uint32 buad)
 {
 	Uint16 brr_reg = (1875000 / buad) - 1;	//15000000/8 = 1875000
-
-	Init_LinaGpio();//22 23 TX RX
 	//Allow write to protected registers
 	EALLOW;
 
@@ -115,6 +89,6 @@ void ZM5168_INit(void)
 	GpioDataRegs.GPASET.bit.GPIO6 = 1;  	//GPIO6输出高电平
 	EDIS;
 
-	GpioDataRegs.GPACLEAR.bit.GPIO6 = 1;  	//GPIO6输出低电平
+//	GpioDataRegs.GPACLEAR.bit.GPIO6 = 1;  	//GPIO6输出低电平
 	DELAY_US(1024);                        //延时1024us
 }

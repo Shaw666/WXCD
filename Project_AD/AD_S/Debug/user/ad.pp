@@ -31,14 +31,16 @@ user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_EPwm_def
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_I2c_defines.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_defines.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_DefaultISR.h
-user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/HK_all_include.h
+user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h
+user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/GlobalVariableDefAndInits.h
+user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/timer.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/printf_uart.h
 user/ad.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdio.h
 user/ad.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/linkage.h
 user/ad.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdarg.h
 user/ad.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/file.h
-user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/TM1650_IIC.h
+user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/hardiic.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/ad.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/pid.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/DataScope_DP.h
@@ -79,14 +81,16 @@ E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_EPwm_defines.h:
 E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_I2c_defines.h: 
 E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_defines.h: 
 E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_DefaultISR.h: 
-E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/HK_all_include.h: 
+E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h: 
+E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/GlobalVariableDefAndInits.h: 
+E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/timer.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/printf_uart.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdio.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/linkage.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdarg.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/file.h: 
-E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/TM1650_IIC.h: 
+E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/hardiic.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/ad.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/pid.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/DataScope_DP.h: 
