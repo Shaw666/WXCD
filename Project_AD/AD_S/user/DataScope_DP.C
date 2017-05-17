@@ -62,7 +62,7 @@ unsigned char DataScope_Data_Generate(unsigned char Channel_Number)
 		
      switch(Channel_Number)   
      { 
-		 case 1:   DataScope_OutPut_Buffer[5]  =  5; return  6; break;   
+		 case 1:   {DataScope_OutPut_Buffer[5]  =  5; return  6; break;   }
 		 case 2:   DataScope_OutPut_Buffer[9]  =  9; return 10; break;
 		 case 3:   DataScope_OutPut_Buffer[13] = 13; return 14; break;
 		 case 4:   DataScope_OutPut_Buffer[17] = 17; return 18; break;

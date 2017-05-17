@@ -108,11 +108,11 @@ void GPIO_INit(void)
 	   GpioDataRegs.GPBSET.bit.GPIO34          = 1;
 
 
-	   //GPIO34---LED2
-	   GpioCtrlRegs.GPBPUD.bit.GPIO43   		= 1;      // Disable pullup on GPIO34
-	   GpioCtrlRegs.GPBMUX1.bit.GPIO43   	= 0;      // Configure GPIO34 as GPIO34
-	   GpioCtrlRegs.GPBDIR.bit.GPIO43   		= 1;      // Direction is input
-	   GpioDataRegs.GPBSET.bit.GPIO43          = 0;
+//	   //GPIO34---LED2
+//	   GpioCtrlRegs.GPBPUD.bit.GPIO43   		= 1;      // Disable pullup on GPIO34
+//	   GpioCtrlRegs.GPBMUX1.bit.GPIO43   	= 0;      // Configure GPIO34 as GPIO34
+//	   GpioCtrlRegs.GPBDIR.bit.GPIO43   		= 1;      // Direction is input
+//	   GpioDataRegs.GPBSET.bit.GPIO43          = 0;
 
 
 	   //GPIO17---DRModul_Fualt

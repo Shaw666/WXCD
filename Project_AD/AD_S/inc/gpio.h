@@ -33,7 +33,7 @@
 #define qdyckey() GpioDataRegs.GPADAT.bit.GPIO17
 #define Excep_qdyc 0x01 //驱动异常
 //风扇开关
-extern u8 key;
+extern u8 key;//拨码开关
 
 void GPIO_INit(void);
 void DIP_Scan(void);

@@ -5,6 +5,72 @@
 union  Module_Fault_REG  ModuleFault;
 
 __interrupt void Module_SciaRxFIFO(void);
+
+void SetupSCI(Uint32 buad)
+{
+	Uint16 brr_reg = (1875000 / buad) - 1;	//15000000/8 = 1875000
+	//Allow write to protected registers
+	EALLOW;
+
+	GpioCtrlRegs.GPAPUD.bit.GPIO18 = 0;		// Enable pull-up for GPIO22 (LIN TX)
+	GpioCtrlRegs.GPAPUD.bit.GPIO19 = 0;		// Enable pull-up for GPIO23 (LIN RX)
+	GpioCtrlRegs.GPAQSEL2.bit.GPIO19 = 3;  // Asynch input GPIO23 (LINRXA)
+	GpioCtrlRegs.GPAMUX2.bit.GPIO18 = 2;   // Configure GPIO19 for LIN TX operation	 (3-Enable,0-Disable)
+	GpioCtrlRegs.GPAMUX2.bit.GPIO19 = 2;   // Configure GPIO23 for LIN RX operati
+
+	LinaRegs.SCIGCR0.bit.RESET = 0; //Into reset
+	LinaRegs.SCIGCR0.bit.RESET = 1; //Out of reset
+
+	LinaRegs.SCIGCR1.bit.SWnRST = 0; //Into software reset
+
+	//SCI Configurations
+	LinaRegs.SCIGCR1.bit.COMMMODE = 0;   //Idle-Line Mode
+	LinaRegs.SCIGCR1.bit.TIMINGMODE = 1; //Asynchronous Timing
+	LinaRegs.SCIGCR1.bit.PARITYENA = 0;  //No Parity Check
+	LinaRegs.SCIGCR1.bit.PARITY = 0;	 //Odd Parity
+	LinaRegs.SCIGCR1.bit.STOP = 0;		 //One Stop Bit
+	LinaRegs.SCIGCR1.bit.CLK_MASTER = 1; //Enable SCI Clock
+	LinaRegs.SCIGCR1.bit.LINMODE = 0;	 //SCI Mode
+	LinaRegs.SCIGCR1.bit.SLEEP = 0;      //Ensure Out of Sleep
+	LinaRegs.SCIGCR1.bit.MBUFMODE = 0;	 //No Buffers Mode
+	LinaRegs.SCIGCR1.bit.LOOPBACK = 0;   //External Loopback
+	LinaRegs.SCIGCR1.bit.CONT = 1;		 //Continue on Suspend
+	LinaRegs.SCIGCR1.bit.RXENA = 1;		 //Enable RX
+	LinaRegs.SCIGCR1.bit.TXENA = 1;		 //Enable TX
+
+	//Ensure IODFT is disabled
+    LinaRegs.IODFTCTRL.bit.IODFTENA = 0x0;
+
+    //Set transmission length
+    LinaRegs.SCIFORMAT.bit.CHAR = 7;	 //Eight bits
+    LinaRegs.SCIFORMAT.bit.LENGTH = 0;   //One byte
+
+	//Set baudrate
+    LinaRegs.BRSR.bit.SCI_LIN_PSL =  brr_reg & 0x00FF; //0XC2-->9600 ; 97--> 19200 ;0x30-->38400;14-->128000
+    LinaRegs.BRSR.bit.SCI_LIN_PSH = (brr_reg >> 8) & 0x00FF;
+    // baud = LSPCLK/8/((BRR+1)
+
+    LinaRegs.BRSR.bit.M = 5;
+
+    LinaRegs.SCIGCR1.bit.SWnRST = 1;  //bring out of software reset
+
+	//Disable write to protected registers
+	EDIS;
+	//等待准备完毕
+	while(LinaRegs.SCIFLR.bit.IDLE == 1);
+//	//Wait for a charachter to by typed
+//	if(LinaRegs.SCIFLR.bit.RXRDY == 1)
+//	{
+//		ReceivedChar = LinaRegs.SCIRD;
+//
+//		//Wait for the module to be ready to transmit
+//		while(LinaRegs.SCIFLR.bit.TXRDY == 0);
+//		//Begin transmission
+//		LinaRegs.SCITD = ReceivedChar;
+//	}
+}
+
+
 void SCI_Init(Uint32 buad) {
 	Uint16 brr_reg = (1875000 / buad) - 1;	//15000000/8 = 1875000
 
@@ -40,7 +106,7 @@ void SCI_Init(Uint32 buad) {
 }
 
 Uint16 SciaReceiveCount = 0;
-Uint16 SciaReceiveBuff[5];
+Uint16 SciaReceiveBuff[74]={0};
 Uint16 SciaRecTimeoutCount = 0;
 
 Uint16 SciaResponseCount = 0;
@@ -49,17 +115,20 @@ Uint16 SciaResponTimeoutCount = 0;
 Uint16 DataBuff[10];
 void Module_SciaRxFIFO(void)  //串口接收中断
 {
-	Uint16 data;
-	Uint16 rankCount,compare=64;
+	Uint16 data=0;
+	Uint16 rankCount=0,compare=64;
+
 
 	while (SciaRegs.SCIFFRX.bit.RXFFST > 0) {
-		if (SciaReceiveCount < 5) {
+		if (SciaReceiveCount < DealRxLenth) {
 			data = SciaRegs.SCIRXBUF.all;
 			SciaReceiveBuff[SciaReceiveCount++] = data;
+//			while(LinaRegs.SCIFLR.bit.TXRDY == 0);
+//			LinaRegs.SCITD = data;
 		}
 	}
 
-	if (SciaReceiveCount >= 5) {
+	if (SciaReceiveCount >= DealRxLenth) {
 		switch (SciaReceiveBuff[0]) {
 		case 0xA1:
 //接收端交流电流电压帧
@@ -74,14 +143,16 @@ void Module_SciaRxFIFO(void)  //串口接收中断
 					+ ((SciaReceiveBuff[2] & 0x00FF));
 			DataBuff[1] = ((SciaReceiveBuff[3] & 0x00ff) << 8)
 					+ ((SciaReceiveBuff[4] & 0x00FF));
-			PID_Control_V(DataBuff);
+			PID_Control_V(DataBuff[0]);
+			AdcRegs.ADCSOCFRC1.all = 0X035E; //软件触发AD 的 SOC0--SOC3采样
 			break;
 		case 0x55:
+//接收端状态
 			DataBuff[0] = ((SciaReceiveBuff[1] & 0x00ff) << 8)
 					+ ((SciaReceiveBuff[2] & 0x00FF));
 			DataBuff[1] = ((SciaReceiveBuff[3] & 0x00ff) << 8)
 					+ ((SciaReceiveBuff[4] & 0x00FF));
-			PID_Control_V(DataBuff);
+//			PID_Control_V(DataBuff[0]);
 
 			break;
 		case 0xAA:
@@ -96,6 +167,28 @@ void Module_SciaRxFIFO(void)  //串口接收中断
 					//错误
 					break;
 				}
+			}
+			break;
+		case 0xAB:
+			if(SciaReceiveBuff[3]==0xD6){
+//				ResetDevice(0x00,0x01);
+//				DealRxLenth = 5;
+//				SciaReceiveCount=0;
+			}
+			else if((SciaReceiveBuff[3]==0xD1)){
+////				LocalConfDeal(SciaReceiveBuff);
+//				WriteConf(0x2001,SciaReceiveBuff);
+//				DealRxLenth = 7;
+//				SciaReceiveCount=0;
+////				ResetDevice(0x00,0x01);
+////				DealRxLenth = 5;
+
+			}
+			else if(SciaReceiveBuff[3]==0xD4){
+//				ReadLocalConf();
+			}
+			else{
+				//设置有误
 			}
 			break;
 		case 0xFF:
@@ -130,7 +223,7 @@ void Module_SciaRxFIFO(void)  //串口接收中断
 		default: SciaReceiveCount=0;
 			break;
 		}
-
+		SciaReceiveCount = 0;
 	}
 	if (SciaRegs.SCIRXST.bit.RXERROR == 1) {
 		SciaRegs.SCICTL1.bit.SWRESET = 0; //复位串口
@@ -141,7 +234,7 @@ void Module_SciaRxFIFO(void)  //串口接收中断
 	SciaRegs.SCIFFRX.bit.RXFFINTCLR = 1;   // Clear Interrupt flag
 	PieCtrlRegs.PIEACK.bit.ACK9 = 1;
 	//Begin transmission
-	SciaReceiveCount = 0;
+
 }
 
 void ResponseSCI(Uint16* tmp){
@@ -235,12 +328,14 @@ Uint16 SendRequestSCI(Uint16 tmp) {
 //-----------------------------------------------
 //Printf 函数连接
 //-----------------------------------------------
-void scia_xmit(int a) {
+void scia_xmit(Uint16 a) {
 
-	while (SciaRegs.SCIFFTX.bit.TXFFST != 0)
-		;
+	while (SciaRegs.SCIFFTX.bit.TXFFST != 0);
 	//while(SciaRegs.SCICTL2.bit.TXEMPTY != 1)
 	SciaRegs.SCITXBUF = a;
+//	counttt++;
+//	while(LinaRegs.SCIFLR.bit.TXRDY == 0);
+//	LinaRegs.SCITD = a;
 }
 void open_uart_debug(void) {
 	int status;

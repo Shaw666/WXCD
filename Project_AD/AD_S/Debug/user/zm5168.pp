@@ -35,7 +35,7 @@ user/zm5168.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h
 user/zm5168.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP28x_Project.h
 user/zm5168.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_typedefs.h
 user/zm5168.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/timer.h
-user/zm5168.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/printf_uart.h
+user/zm5168.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/communicationsci.h
 user/zm5168.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdio.h
 user/zm5168.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/linkage.h
 user/zm5168.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdarg.h
@@ -85,7 +85,7 @@ E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h:
 E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP28x_Project.h: 
 E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_typedefs.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/timer.h: 
-E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/printf_uart.h: 
+E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/communicationsci.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdio.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/linkage.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdarg.h: 

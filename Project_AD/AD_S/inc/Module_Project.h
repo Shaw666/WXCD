@@ -31,7 +31,7 @@
 #include "GlobalVariableDefAndInits.h"
 #include "DSP28x_Project.h"
 #include "timer.h"
-#include "printf_uart.h"
+#include "communicationsci.h"
 #include "hardiic.h"
 #include "ad.h"
 #include "pid.h"
@@ -77,7 +77,7 @@ extern "C" {
 //===========================================================================
 // Module Output Parameter Set
 //===========================================================================
-#define ModultOutputVotInitSet        					2200    	// (220V*10)
+#define ModultOutputVotInitSet        					1400    	// (220V*10)
 #define ModultOutputVotSetMin         					2000		//(240V*10)
 #define ModultOutputVotSetMax        					2400		//(200V*10)
 #define ModuleOutputCurrLimitInitSet  				72    	//(7.2A*10)

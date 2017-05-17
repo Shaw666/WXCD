@@ -69,10 +69,10 @@ void PID_Control_I(void)     //
 	}	
 }
 u16 temp[6],count=0,x;
-void PID_Control_V(Uint16* tmp)     //电压环前级输入pfc后电压为Um=400（1/1500*100%=0.06%） U有效=D*Um=1---0.24V理论
+void PID_Control_V(Uint16 tmp)     //电压环前级输入pfc后电压为Um=400（1/1500*100%=0.06%） U有效=D*Um=1---0.24V理论
 {
-	PID_V.MySetPoint =2200;
-	PID_V.Input = (Uint16) ((Uint32) tmp* (Uint32) OutDCVoltageScale >> 15);  //  输入为输出电压扩大十倍
+	PID_V.MySetPoint =ModuleCtlReg.OutputVoltSet;
+	PID_V.Input =tmp;  //  输入为输出电压扩大十倍
 	
 	PID_V.Error = PID_V.MySetPoint-PID_V.Input; 
 	PID_V.Output = PID_V.MyOutput + PID_V.kp*PVAL_V + PID_V.ki*IVAL_V+PID_V.kd*DVAL_V;
@@ -88,53 +88,23 @@ void PID_Control_V(Uint16* tmp)     //电压环前级输入pfc后电压为Um=400（1/1500*10
 }
 
 
-//#################################################
-//串口接收中断函数
-//采用FIFO机制（缓存）
-//SCI_FIFO_LEN 定义为 1，最大为4
-//-----------------------------------------------
-interrupt void uartRx_isr(void) {
-
-	if (SciaRegs.SCIFFRX.bit.RXFFST == 1){
-	temp[count] = SciaRegs.SCIRXBUF.bit.RXDT;
-	SciaRegs.SCITXBUF = temp[count];
-	count++;
-	if(count==6) {count=0;}
-	if(temp[0]==0xAA){
-
-	}
-	else if(temp[0]==0xA5){
-
-	}
-	}
-
-	SciaRegs.SCIFFRX.bit.RXFFINTCLR = 1;   // Clear Interrupt flag
-	PieCtrlRegs.PIEACK.bit.ACK9 = 1;
-}
-
-
-__interrupt void cpu_timer1_isr(void)
-{
-	EDIS;
-//	AdcRegs.ADCSOCFRC1.all = 0X035E; //软件触发AD 的 SOC0--SOC3采样
-//	Upper_Uart();
-//	PID_Control_V();
-}
+//__interrupt void cpu_timer1_isr(void)
+//{
+//	EDIS;
+//}
 
 
 unsigned char Send_Count; //串口需要发送的数据个数
 int j=0;     //串口发送数据计数
 void Upper_Uart(void)//上位机发送程序
 {
-//	DataScope_Get_Channel_Data(Sample.PFCVoltReal,1);   //将电压环PID输入 写入通道
-//	DataScope_Get_Channel_Data(Sample.PFCCurrentReal,2);     //将电压环PID输入 写入通道
-//	DataScope_Get_Channel_Data(Sample.DC3P3VoltReal,3);   //将电压环PID输入 写入通道
-//	DataScope_Get_Channel_Data(Sample.DC5VoltReal,4);     //将电压环PID输入 写入通道
-//	DataScope_Get_Channel_Data(Sample.P15VoltReal,5);   //将电压环PID输入 写入通道
-//	DataScope_Get_Channel_Data(Sample.N15VoltReal,6);     //将电压环PID输入 写入通道
-//	DataScope_Get_Channel_Data(Sample.TempRealValue,7);   //将电压环PID输入 写入通道
-	DataScope_Get_Channel_Data(V_OUT,1);
-	DataScope_Get_Channel_Data(PID_V.Input,2);
+	DataScope_Get_Channel_Data(Sample.PFCVoltReal,1);   //将电压环PID输入 写入通道
+	DataScope_Get_Channel_Data(Sample.PFCCurrentReal,2);     //将电压环PID输入 写入通道
+	DataScope_Get_Channel_Data(Sample.DC5VoltReal,3);     //将电压环PID输入 写入通道
+	DataScope_Get_Channel_Data(Sample.TempRealValue,4);   //将电压环PID输入 写入通道
+	DataScope_Get_Channel_Data(PID_V.Input,5);
+	DataScope_Get_Channel_Data(ModuleCtlReg.OutputVoltSet,6);
+	DataScope_Get_Channel_Data(V_OUT,7);
 	/*******************
 	串口发送数据给上位机
 	********************/

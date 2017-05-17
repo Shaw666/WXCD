@@ -144,7 +144,7 @@ all: WXCD_FS.out
 WXCD_FS.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: C2000 Linker'
-	"C:/ti/ccsv5/tools/compiler/c2000_6.2.0/bin/cl2000" -v28 -ml -mt --cla_support=cla0 -g --diag_warning=225 --display_error_number --diag_wrap=off -z -m"WXCD_FS.map" --stack_size=0x300 --warn_sections -i"C:/ti/ccsv5/tools/compiler/c2000_6.2.0/lib" -i"C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include" -i"E:/workspace_v5_5/WXCD_FS" -i"E:/workspace_v5_5/WXCD_FS/DSP2803x_common/lib" -i"E:/workspace_v5_5/WXCD_FS/IQmath/v160/lib" --reread_libs --display_error_number --diag_wrap=off --xml_link_info="WXCD_FS_linkInfo.xml" --rom_model -o "WXCD_FS.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv5/tools/compiler/c2000_6.2.0/bin/cl2000" -v28 -ml -mt --cla_support=cla0 -g --diag_warning=225 --display_error_number --diag_wrap=off -z -m"WXCD_FS.map" --heap_size=0x300 --stack_size=0x300 --warn_sections -i"C:/ti/ccsv5/tools/compiler/c2000_6.2.0/lib" -i"C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include" -i"E:/workspace_v5_5/WXCD_FS" -i"E:/workspace_v5_5/WXCD_FS/DSP2803x_common/lib" --reread_libs --display_error_number --diag_wrap=off --xml_link_info="WXCD_FS_linkInfo.xml" --rom_model -o "WXCD_FS.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build

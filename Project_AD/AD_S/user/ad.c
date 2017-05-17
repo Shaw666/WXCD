@@ -199,7 +199,6 @@ void Module_ADCalibration_ISR(void) {
 
 	}
 	ModuleCtlReg.BufferOffset++;
-	AdcRegs.ADCSOCFRC1.all = 0X035E; //软件触发AD 的 SOC0--SOC3采样
 }
 
 void ArbitramentProtect(void) {

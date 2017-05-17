@@ -70,7 +70,6 @@
    FLASHE      : origin = 0x3EE000, length = 0x002000
    FLASHD      : origin = 0x3F0000, length = 0x002000
    FLASHC      : origin = 0x3F2000, length = 0x002000
-   RAML3       : origin = 0x009000, length = 0x001000
 */
 
 MEMORY
@@ -99,9 +98,10 @@ PAGE 1 :   /* Data Memory */
            /* Memory (RAM/FLASH/OTP) blocks can be moved to PAGE0 for program allocation */
            /* Registers remain on PAGE1                                                  */
    BOOT_RSVD   : origin = 0x000000, length = 0x000050     /* Part of M0, BOOT rom will use this for stack */
-   RAMM0       : origin = 0x000050, length = 0x0003B0     /* on-chip RAM block M0 */
-   RAMM1       : origin = 0x000400, length = 0x000400     /* on-chip RAM block M1 */
-   RAML23      : origin = 0x008C00, length = 0x001400     /* on-chip RAM block L23 */
+   RAMM0       : origin = 0x000050, length = 0x000300     /* on-chip RAM block M0 */
+   RAMM1       : origin = 0x000350, length = 0x000350     /* on-chip RAM block M1 */
+   RAML2       : origin = 0x008B00, length = 0x000900     /* on-chip RAM block L2 */
+   RAML3       : origin = 0x009400, length = 0x000900     /* on-chip RAM block L3 */
    FLASHB1     : origin = 0x3F4000, length = 0x001000     /* on-chip FLASH */
 
 }
@@ -133,8 +133,8 @@ SECTIONS
 
    /* Allocate uninitalized data sections: */
    .stack              : > RAMM0       PAGE = 1
-   .ebss               : > RAML23       PAGE = 1
-   .esysmem            : > RAML23       PAGE = 1
+   .ebss               : > RAML2       PAGE = 1
+   .esysmem            : > RAML2       PAGE = 1
 
    /* Initalized sections go in Flash */
    /* For SDFlash to program these, they must be allocated to page 0 */

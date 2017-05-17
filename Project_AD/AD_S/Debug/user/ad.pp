@@ -35,7 +35,7 @@ user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/GlobalVariableDefAndInits.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/timer.h
-user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/printf_uart.h
+user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/communicationsci.h
 user/ad.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdio.h
 user/ad.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/linkage.h
 user/ad.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdarg.h
@@ -85,7 +85,7 @@ E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h:
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/GlobalVariableDefAndInits.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/timer.h: 
-E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/printf_uart.h: 
+E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/communicationsci.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdio.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/linkage.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdarg.h: 
