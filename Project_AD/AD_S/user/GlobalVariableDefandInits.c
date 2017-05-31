@@ -108,9 +108,11 @@ void Init_GlobalVariable(void)
 		ModuleCtlReg.LEDCtlTimeCount                        = 0;
 		ModuleCtlReg.OverloadTimeCount				    = 0;
 
+		ModuleFault.all = 0x00;
 		// IO Init
+		PID_Init();
 		RELAYA_OFF();
-		PFC_Disable();
+		PFC_Enable();  //低电平打开pfc
 
 
 }

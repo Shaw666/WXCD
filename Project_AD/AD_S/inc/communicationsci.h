@@ -10,6 +10,7 @@
 
 extern Uint16 DealRxLenth;
 extern Uint16 DealTxLenth;
+extern Uint16 startFlag;
 
 //--------------------------------------------------------------------
 void handleRxFIFO(void);

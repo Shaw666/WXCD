@@ -13,6 +13,7 @@ u8 key = 0;
 extern Uint16 RamfuncsLoadSize;
 
 void main(void) {
+	Uint16 duty=0;
 	InitSysCtrl();
 	DINT;
 	InitPieCtrl();
@@ -21,6 +22,7 @@ void main(void) {
 	InitPieVectTable();
 	memcpy(&RamfuncsRunStart, &RamfuncsLoadStart, (Uint32) &RamfuncsLoadSize);
 	GPIO_INit();   //初始化GPIO 区别收发
+	Init_GlobalVariable();
 	ADC_Config();
 	EALLOW;
 	SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 0;
@@ -29,12 +31,11 @@ void main(void) {
 //	Timer1_init(); //初始化定时器1用于定时处理PID 区别收发
 	SCI_Init(57600);   //初始化SCI
 	SetupSCI(115200);
-	ZM5168_INit();              //初始化zm5168_P0模块
+//	ZM5168_INit();              //初始化zm5168_P0模块
 
 //	open_uart_debug();
 //	InitI2C_Gpio();             //io 初始化为IIC
 //	I2CA_Init();                //HW IIC初始化，100KHz
-	EPWMA_Config(1500);
 	EPWMB_Config(1500);
 	EALLOW;
 	SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1;
@@ -47,21 +48,20 @@ void main(void) {
 //	AdcRegs.ADCSOCFRC1.all = 0X035E; //软件触发AD 的 SOC0--SOC3采样
 //	DIP_Scan();   //扫描拨码开关
 	DealRxLenth = 5;
+	AdcRegs.ADCSOCFRC1.all = 0X035E;
 	while (1) {
-
-		if (timer0Base.Mark_Para.Status_Bits.OnemsdFlag == 1) {
-			timer0Base.Mark_Para.Status_Bits.OnemsdFlag = 0;
-			if(timer0Base.msCounter%50==0){
-//			AdcRegs.ADCSOCFRC1.all = 0X035E; //软件触发AD 的 SOC0--SOC3采样
-			}
-			if (timer0Base.msCounter%800==0) {
-				Upper_Uart();
-			}
-			if (timer0Base.msCounter >= 2000) {
-				GpioDataRegs.GPBTOGGLE.bit.GPIO43 	= 1;
+			if(ModuleFault.bit.JSOutputVoltHighFault==0){
+			if(timer0Base.msCounter%10==0){
 				timer0Base.msCounter=0;
+				if(duty<300){
+				duty +=10;
+				if(duty>=300)
+					duty=300;
+				EPwm2Regs.CMPA.half.CMPA = duty;
+				EPwm2Regs.CMPB = 1500 - duty;
 			}
-		}
+			}
+	}
 
 	}
 }

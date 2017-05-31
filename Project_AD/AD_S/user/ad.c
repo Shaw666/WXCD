@@ -4,7 +4,6 @@
  *  Created on: 2017-3-20
  *      Author: Shaw
  */
-#include "DSP28x_Project.h"     // Device Headerfile and Examples Include File
 #include "Module_Project.h"
 
 interrupt void Module_ADCalibration_ISR(void);
@@ -103,102 +102,104 @@ void Module_ADCalibration_ISR(void) {
 	EDIS;
 	AdcRegs.ADCINTFLGCLR.bit.ADCINT3 = 1;//Clear ADCINT1 flag reinitialize for next SOC
 
-	GpioDataRegs.GPBTOGGLE.bit.GPIO41 = 1;
-
-	Sample.PFCVoltSampleBuffer[ModuleCtlReg.BufferOffset] = ((PFCVolt_ADCResult
-			+ Sample.PFCVoltSampleOld * 3) >> 2);
-	Sample.PFCVoltSampleOld =
-			Sample.PFCVoltSampleBuffer[ModuleCtlReg.BufferOffset];
-
-	Sample.PFCCurrentSampleBuffer[ModuleCtlReg.BufferOffset] =
-			((PFCCurr_ADCResult + Sample.PFCCurrentSampleOld * 3) >> 2);
-	Sample.PFCCurrentSampleOld =
-			Sample.PFCCurrentSampleBuffer[ModuleCtlReg.BufferOffset];
-
-	Sample.DC3P3VoltSampleBuffer[ModuleCtlReg.BufferOffset] =
-			((DC3P3VoltADCResult + Sample.DC3P3VoltSampleOld * 3) >> 2);
-	Sample.DC3P3VoltSampleOld =
-			Sample.DC3P3VoltSampleBuffer[ModuleCtlReg.BufferOffset];
-
-	Sample.DC5VoltSampleBuffer[ModuleCtlReg.BufferOffset] = ((DC5VoltADCResult
-			+ Sample.DC5VoltSampleOld * 3) >> 2);
-	Sample.DC5VoltSampleOld =
-			Sample.DC5VoltSampleBuffer[ModuleCtlReg.BufferOffset];
-
-	Sample.P15VoltSampleBuffer[ModuleCtlReg.BufferOffset] = ((P15Volt_ADCResult
-			+ Sample.P15VoltSampleOld * 3) >> 2);
-	Sample.P15VoltSampleOld =
-			Sample.P15VoltSampleBuffer[ModuleCtlReg.BufferOffset];
-
-	Sample.N15VoltSampleBuffer[ModuleCtlReg.BufferOffset] = ((N15Volt_ADCResult
-			+ Sample.N15VoltSampleOld * 3) >> 2);
-	Sample.N15VoltSampleOld =
-			Sample.N15VoltSampleBuffer[ModuleCtlReg.BufferOffset];
-
-	Sample.TempSampleBuffer[ModuleCtlReg.BufferOffset] = ((Temperature_ADCResult
-			+ Sample.TempSampleOld * 3) >> 2);
-	Sample.TempSampleOld = Sample.TempSampleBuffer[ModuleCtlReg.BufferOffset];
+	Sample.PFCVoltSampleBuffer[ModuleCtlReg.BufferOffset] =
+//			((
+					PFCVolt_ADCResult;
+//			+ Sample.PFCVoltSampleOld * 3) >> 2);
+//	Sample.PFCVoltSampleOld =
+//			Sample.PFCVoltSampleBuffer[ModuleCtlReg.BufferOffset];
+//
+//	Sample.PFCCurrentSampleBuffer[ModuleCtlReg.BufferOffset] =
+//			((PFCCurr_ADCResult + Sample.PFCCurrentSampleOld * 3) >> 2);
+//	Sample.PFCCurrentSampleOld =
+//			Sample.PFCCurrentSampleBuffer[ModuleCtlReg.BufferOffset];
+//
+//	Sample.DC3P3VoltSampleBuffer[ModuleCtlReg.BufferOffset] =
+//			((DC3P3VoltADCResult + Sample.DC3P3VoltSampleOld * 3) >> 2);
+//	Sample.DC3P3VoltSampleOld =
+//			Sample.DC3P3VoltSampleBuffer[ModuleCtlReg.BufferOffset];
+//
+//	Sample.DC5VoltSampleBuffer[ModuleCtlReg.BufferOffset] = ((DC5VoltADCResult
+//			+ Sample.DC5VoltSampleOld * 3) >> 2);
+//	Sample.DC5VoltSampleOld =
+//			Sample.DC5VoltSampleBuffer[ModuleCtlReg.BufferOffset];
+//
+//	Sample.P15VoltSampleBuffer[ModuleCtlReg.BufferOffset] = ((P15Volt_ADCResult
+//			+ Sample.P15VoltSampleOld * 3) >> 2);
+//	Sample.P15VoltSampleOld =
+//			Sample.P15VoltSampleBuffer[ModuleCtlReg.BufferOffset];
+//
+//	Sample.N15VoltSampleBuffer[ModuleCtlReg.BufferOffset] = ((N15Volt_ADCResult
+//			+ Sample.N15VoltSampleOld * 3) >> 2);
+//	Sample.N15VoltSampleOld =
+//			Sample.N15VoltSampleBuffer[ModuleCtlReg.BufferOffset];
+//
+//	Sample.TempSampleBuffer[ModuleCtlReg.BufferOffset] = ((Temperature_ADCResult
+//			+ Sample.TempSampleOld * 3) >> 2);
+//	Sample.TempSampleOld = Sample.TempSampleBuffer[ModuleCtlReg.BufferOffset];
+//
 
 	Sample.PFCVoltSampleAccSum +=
 			Sample.PFCVoltSampleBuffer[ModuleCtlReg.BufferOffset];
-	Sample.PFCCurrentSampleAccSum +=
-			Sample.PFCCurrentSampleBuffer[ModuleCtlReg.BufferOffset];
-	Sample.DC3P3VoltSampleAccSum +=
-			Sample.DC3P3VoltSampleBuffer[ModuleCtlReg.BufferOffset];
-	Sample.DC5VoltSampleAccSum +=
-			Sample.DC5VoltSampleBuffer[ModuleCtlReg.BufferOffset];
-	Sample.P15VoltSampleAccSum +=
-			Sample.P15VoltSampleBuffer[ModuleCtlReg.BufferOffset];
-	Sample.N15VoltSampleAccSum +=
-			Sample.N15VoltSampleBuffer[ModuleCtlReg.BufferOffset];
-	Sample.TempSampleAccSum +=
-			Sample.TempSampleBuffer[ModuleCtlReg.BufferOffset];
-
+//	Sample.PFCCurrentSampleAccSum +=
+//			Sample.PFCCurrentSampleBuffer[ModuleCtlReg.BufferOffset];
+//	Sample.DC3P3VoltSampleAccSum +=
+//			Sample.DC3P3VoltSampleBuffer[ModuleCtlReg.BufferOffset];
+//	Sample.DC5VoltSampleAccSum +=
+//			Sample.DC5VoltSampleBuffer[ModuleCtlReg.BufferOffset];
+//	Sample.P15VoltSampleAccSum +=
+//			Sample.P15VoltSampleBuffer[ModuleCtlReg.BufferOffset];
+//	Sample.N15VoltSampleAccSum +=
+//			Sample.N15VoltSampleBuffer[ModuleCtlReg.BufferOffset];
+//	Sample.TempSampleAccSum +=
+//			Sample.TempSampleBuffer[ModuleCtlReg.BufferOffset];
+//
 	if (FASTBUFLENTH <= ModuleCtlReg.BufferOffset) {
 		ModuleCtlReg.BufferOffset = 0;
-		// output current
-		Sample.PFCVolt = (Uint16) (Sample.PFCVoltSampleAccSum >> 3);
+//		// output current
+		Sample.PFCVolt = (Uint16) (Sample.PFCVoltSampleAccSum >> 6);
 		Sample.PFCVoltSampleAccSum = 0;
 		Sample.PFCVoltReal = (Uint16) ((Uint32) Sample.PFCVolt
 				* (Uint32) PFCVoltageScale >> 15);
 
-		Sample.PFCCurrent = (Uint16) (Sample.PFCCurrentSampleAccSum >> 3);
-		Sample.PFCCurrentSampleAccSum = 0;
-		Sample.PFCCurrentReal = (int16) ((Uint32) Sample.PFCCurrent
-				* (Uint32) PFCCurrentScale >> 15);
-//		if (Sample.PFCCurrentReal < 0) {
-//			Sample.PFCCurrentReal = 0;
-//		}
-
-		Sample.DC3P3Volt = (Uint16) (Sample.DC3P3VoltSampleAccSum >> 3);
-		Sample.DC3P3VoltSampleAccSum = 0;
-		Sample.DC3P3VoltReal = (int16) ((Uint32) Sample.DC3P3Volt
-				* (Uint32) DC3P3VoltScale >> 15);
-
-		Sample.DC5Volt = (Uint16) (Sample.DC5VoltSampleAccSum >> 3);
-		Sample.DC5VoltSampleAccSum = 0;
-		Sample.DC5VoltReal = (int16) ((Uint32) Sample.DC5Volt
-				* (Uint32) DC5VoltScale >> 15);
-
-		Sample.P15Volt = (Uint16) (Sample.P15VoltSampleAccSum >> 3);
-		Sample.P15VoltSampleAccSum = 0;
-		Sample.P15VoltReal = (int16) ((Uint32) Sample.P15Volt
-				* (Uint32) P15VoltScale >> 15);
-
-		Sample.N15Volt = (Uint16) (Sample.N15VoltSampleAccSum >> 3);
-		Sample.N15VoltSampleAccSum = 0;
-		Sample.N15VoltReal = (int16) ((Uint32) Sample.N15Volt
-				* (Uint32) N15VoltScale >> 15);
-
-		Sample.Temperature = (Uint16) (Sample.TempSampleAccSum >> 3);
-		Sample.TempSampleAccSum = 0;
-		Sample.TempRealValue = (int16) ((Uint32) Sample.Temperature
-				* (Uint32) TemperatureScale >> 15);
-
-		// Calibration use y=ax+b
-
+//		Sample.PFCCurrent = (Uint16) (Sample.PFCCurrentSampleAccSum >> 4);
+//		Sample.PFCCurrentSampleAccSum = 0;
+//		Sample.PFCCurrentReal = (int16) ((Uint32) Sample.PFCCurrent
+//				* (Uint32) PFCCurrentScale >> 15);
+////		if (Sample.PFCCurrentReal < 0) {
+////			Sample.PFCCurrentReal = 0;
+////		}
+//
+//		Sample.DC3P3Volt = (Uint16) (Sample.DC3P3VoltSampleAccSum >> 3);
+//		Sample.DC3P3VoltSampleAccSum = 0;
+//		Sample.DC3P3VoltReal = (int16) ((Uint32) Sample.DC3P3Volt
+//				* (Uint32) DC3P3VoltScale >> 15);
+//
+//		Sample.DC5Volt = (Uint16) (Sample.DC5VoltSampleAccSum >> 3);
+//		Sample.DC5VoltSampleAccSum = 0;
+//		Sample.DC5VoltReal = (int16) ((Uint32) Sample.DC5Volt
+//				* (Uint32) DC5VoltScale >> 15);
+//
+//		Sample.P15Volt = (Uint16) (Sample.P15VoltSampleAccSum >> 3);
+//		Sample.P15VoltSampleAccSum = 0;
+//		Sample.P15VoltReal = (int16) ((Uint32) Sample.P15Volt
+//				* (Uint32) P15VoltScale >> 15);
+//
+//		Sample.N15Volt = (Uint16) (Sample.N15VoltSampleAccSum >> 3);
+//		Sample.N15VoltSampleAccSum = 0;
+//		Sample.N15VoltReal = (int16) ((Uint32) Sample.N15Volt
+//				* (Uint32) N15VoltScale >> 15);
+//
+//		Sample.Temperature = (Uint16) (Sample.TempSampleAccSum >> 3);
+//		Sample.TempSampleAccSum = 0;
+//		Sample.TempRealValue = (int16) ((Uint32) Sample.Temperature
+//				* (Uint32) TemperatureScale >> 15);
+//
+//		// Calibration use y=ax+b
+//
 	}
 	ModuleCtlReg.BufferOffset++;
+	AdcRegs.ADCSOCFRC1.all = 0X035E;
 }
 
 void ArbitramentProtect(void) {

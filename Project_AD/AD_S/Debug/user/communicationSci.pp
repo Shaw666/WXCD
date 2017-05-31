@@ -50,6 +50,7 @@ user/communicationSci.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/gpio.h
 user/communicationSci.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Exint.h
 user/communicationSci.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/zm5168.h
 user/communicationSci.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/sim_spi.h
+user/communicationSci.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/testpwm.h
 
 ../user/communicationSci.c: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdio.h: 
@@ -101,3 +102,4 @@ E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/gpio.h:
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Exint.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/zm5168.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/sim_spi.h: 
+E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/testpwm.h: 

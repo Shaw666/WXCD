@@ -10,6 +10,7 @@ ORDERED_OBJS += \
 $(GEN_CMDS__FLAG) \
 "./user/zm5168.obj" \
 "./user/timer.obj" \
+"./user/testpwm.obj" \
 "./user/sim_spi.obj" \
 "./user/pwm.obj" \
 "./user/pid.obj" \
@@ -152,9 +153,9 @@ WXCD_FS.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(C2000_EXECUTABLE_OUTPUTS__QUOTED) "WXCD_FS.out"
-	-$(RM) "DSP2803x_Adc.pp" "DSP2803x_CpuTimers.pp" "DSP2803x_DefaultIsr.pp" "DSP2803x_EPwm.pp" "DSP2803x_GlobalVariableDefs.pp" "DSP2803x_Gpio.pp" "DSP2803x_I2C.pp" "DSP2803x_Lin.pp" "DSP2803x_PieCtrl.pp" "DSP2803x_PieVect.pp" "DSP2803x_Sci.pp" "DSP2803x_SysCtrl.pp" "user\Exint.pp" "user\GlobalVariableDefandInits.pp" "user\ad.pp" "user\communicationSci.pp" "user\gpio.pp" "user\hardiic.pp" "user\main.pp" "user\pid.pp" "user\pwm.pp" "user\sim_spi.pp" "user\timer.pp" "user\zm5168.pp" 
+	-$(RM) "DSP2803x_Adc.pp" "DSP2803x_CpuTimers.pp" "DSP2803x_DefaultIsr.pp" "DSP2803x_EPwm.pp" "DSP2803x_GlobalVariableDefs.pp" "DSP2803x_Gpio.pp" "DSP2803x_I2C.pp" "DSP2803x_Lin.pp" "DSP2803x_PieCtrl.pp" "DSP2803x_PieVect.pp" "DSP2803x_Sci.pp" "DSP2803x_SysCtrl.pp" "user\Exint.pp" "user\GlobalVariableDefandInits.pp" "user\ad.pp" "user\communicationSci.pp" "user\gpio.pp" "user\hardiic.pp" "user\main.pp" "user\pid.pp" "user\pwm.pp" "user\sim_spi.pp" "user\testpwm.pp" "user\timer.pp" "user\zm5168.pp" 
 	-$(RM) "user\DataScope_DP.pp" 
-	-$(RM) "DSP2803x_Adc.obj" "DSP2803x_CodeStartBranch.obj" "DSP2803x_CpuTimers.obj" "DSP2803x_DefaultIsr.obj" "DSP2803x_EPwm.obj" "DSP2803x_GlobalVariableDefs.obj" "DSP2803x_Gpio.obj" "DSP2803x_I2C.obj" "DSP2803x_Lin.obj" "DSP2803x_PieCtrl.obj" "DSP2803x_PieVect.obj" "DSP2803x_Sci.obj" "DSP2803x_SysCtrl.obj" "DSP2803x_usDelay.obj" "user\DataScope_DP.obj" "user\Exint.obj" "user\GlobalVariableDefandInits.obj" "user\ad.obj" "user\communicationSci.obj" "user\gpio.obj" "user\hardiic.obj" "user\main.obj" "user\pid.obj" "user\pwm.obj" "user\sim_spi.obj" "user\timer.obj" "user\zm5168.obj" 
+	-$(RM) "DSP2803x_Adc.obj" "DSP2803x_CodeStartBranch.obj" "DSP2803x_CpuTimers.obj" "DSP2803x_DefaultIsr.obj" "DSP2803x_EPwm.obj" "DSP2803x_GlobalVariableDefs.obj" "DSP2803x_Gpio.obj" "DSP2803x_I2C.obj" "DSP2803x_Lin.obj" "DSP2803x_PieCtrl.obj" "DSP2803x_PieVect.obj" "DSP2803x_Sci.obj" "DSP2803x_SysCtrl.obj" "DSP2803x_usDelay.obj" "user\DataScope_DP.obj" "user\Exint.obj" "user\GlobalVariableDefandInits.obj" "user\ad.obj" "user\communicationSci.obj" "user\gpio.obj" "user\hardiic.obj" "user\main.obj" "user\pid.obj" "user\pwm.obj" "user\sim_spi.obj" "user\testpwm.obj" "user\timer.obj" "user\zm5168.obj" 
 	-$(RM) "DSP2803x_CodeStartBranch.pp" "DSP2803x_usDelay.pp" 
 	-@echo 'Finished clean'
 	-@echo ' '

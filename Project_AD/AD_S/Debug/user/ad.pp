@@ -1,8 +1,7 @@
 # FIXED
 
 user/ad.obj: ../user/ad.c
-user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP28x_Project.h
-user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_typedefs.h
+user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_headers/include/DSP2803x_Device.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_headers/include/DSP2803x_Adc.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_headers/include/DSP2803x_BootVars.h
@@ -31,9 +30,10 @@ user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_EPwm_def
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_I2c_defines.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_defines.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_DefaultISR.h
-user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/GlobalVariableDefAndInits.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h
+user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP28x_Project.h
+user/ad.obj: E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_typedefs.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/timer.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/communicationsci.h
 user/ad.obj: C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdio.h
@@ -49,10 +49,10 @@ user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/gpio.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Exint.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/zm5168.h
 user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/sim_spi.h
+user/ad.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/testpwm.h
 
 ../user/ad.c: 
-E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP28x_Project.h: 
-E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_typedefs.h: 
+E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h: 
 E:/workspace_v5_5/WXCD_FS/DSP2803x_headers/include/DSP2803x_Device.h: 
 E:/workspace_v5_5/WXCD_FS/DSP2803x_headers/include/DSP2803x_Adc.h: 
 E:/workspace_v5_5/WXCD_FS/DSP2803x_headers/include/DSP2803x_BootVars.h: 
@@ -81,9 +81,10 @@ E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_EPwm_defines.h:
 E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_I2c_defines.h: 
 E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_defines.h: 
 E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_DefaultISR.h: 
-E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/GlobalVariableDefAndInits.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h: 
+E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP28x_Project.h: 
+E:/workspace_v5_5/WXCD_FS/DSP2803x_common/include/DSP2803x_Cla_typedefs.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/timer.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/communicationsci.h: 
 C:/ti/ccsv5/tools/compiler/c2000_6.2.0/include/stdio.h: 
@@ -99,3 +100,4 @@ E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/gpio.h:
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Exint.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/zm5168.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/sim_spi.h: 
+E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/testpwm.h: 

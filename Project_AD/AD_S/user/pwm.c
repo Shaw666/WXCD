@@ -26,8 +26,8 @@ void EPWMA_Config(u16 period) {
 
 	//1500- 60  最小1us死区
 	// Setup compare
-	EPwm1Regs.CMPA.half.CMPA = 1440;
-	EPwm1Regs.CMPB = 1500 - 1440;
+	EPwm1Regs.CMPA.half.CMPA = 1200;
+	EPwm1Regs.CMPB = 1500 - 1200;
 	// Set actions
 	//0------CAU
 	EPwm1Regs.AQCTLA.bit.ZRO = AQ_SET;
@@ -52,7 +52,7 @@ void EPWMB_Config(u16 period) {
 	// Setup TBCLK
 	EPwm2Regs.TBCTL.bit.CTRMODE = TB_COUNT_UPDOWN; // Count up
 //	EPwm2Regs.TBCTL.bit.PHSDIR = TB_UP;
-	EPwm2Regs.TBCTL.bit.PHSEN = TB_ENABLE;        // Disable phase loading
+	EPwm2Regs.TBCTL.bit.PHSEN = TB_DISABLE;        // Disable phase loading
 	EPwm2Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;       // Clock ratio to SYSCLKOUT
 	EPwm2Regs.TBCTL.bit.CLKDIV = TB_DIV1;
 
@@ -65,8 +65,8 @@ void EPWMB_Config(u16 period) {
 
 	//1500- 60  最小1us死区
 	// Setup compare
-	EPwm2Regs.CMPA.half.CMPA = 1440;
-	EPwm2Regs.CMPB = 1500 - 1440;
+	EPwm2Regs.CMPA.half.CMPA = 0;
+	EPwm2Regs.CMPB = 1500 - 0;
 	// Set actions
 	//0------CAU
 	EPwm2Regs.AQCTLA.bit.ZRO = AQ_SET;

@@ -49,6 +49,7 @@ user/timer.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/gpio.h
 user/timer.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Exint.h
 user/timer.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/zm5168.h
 user/timer.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/sim_spi.h
+user/timer.obj: E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/testpwm.h
 
 ../user/timer.c: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Module_Project.h: 
@@ -99,3 +100,4 @@ E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/gpio.h:
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/Exint.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/zm5168.h: 
 E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/sim_spi.h: 
+E:/workspace_v5_5/WXCD_FS/Project_AD/AD_S/inc/testpwm.h: 

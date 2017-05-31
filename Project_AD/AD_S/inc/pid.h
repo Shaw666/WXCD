@@ -11,6 +11,6 @@ extern u16 V_OUT;
 
 
 void PID_Init(void);
-void PID_Control_V(Uint16 tmp);
+void PID_Control_V(Uint16 Volttmp, Uint16 Ctmp);
 void Upper_Uart(void);//上位机发送程序
 #endif

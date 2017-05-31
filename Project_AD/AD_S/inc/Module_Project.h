@@ -41,6 +41,8 @@
 #include "Exint.h"
 #include "zm5168.h"
 #include "sim_spi.h"
+#include "testpwm.h"
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -57,9 +59,9 @@ extern "C" {
 // Signal Sample
 // Description in "AD sample calculate.xls"
 //===========================================================================
-#define  FASTBUFLENTH					8			//
+#define  FASTBUFLENTH					63			//
 
-#define  PFCVoltageScale        				    52800//_IQ15(0.161132)*10
+#define  PFCVoltageScale        				    44789//_IQ15(0.161132)*10
 #define  PFCCurrentScale                                   1338//_IQ15(0.004084)*10
 #define  DC3P3VoltScale    	                               290//_IQ15(0.000886)*10
 #define  DC5VoltScale  				          528//_IQ15(0.0016113)*10
@@ -77,7 +79,7 @@ extern "C" {
 //===========================================================================
 // Module Output Parameter Set
 //===========================================================================
-#define ModultOutputVotInitSet        					1400    	// (220V*10)
+#define ModultOutputVotInitSet        					2200    	// (220V*10)
 #define ModultOutputVotSetMin         					2000		//(240V*10)
 #define ModultOutputVotSetMax        					2400		//(200V*10)
 #define ModuleOutputCurrLimitInitSet  				72    	//(7.2A*10)
@@ -160,8 +162,8 @@ extern "C" {
 #define  DRModul_Fualt  						GpioDataRegs.GPBDAT.bit.GPIO17
 
 // GPIO10---PFC_CLS
-#define  PFC_Enable()       	  				GpioDataRegs.GPASET.bit.GPIO10    		= 1
-#define  PFC_Disable()	      				       GpioDataRegs.GPACLEAR.bit.GPIO10  	       = 1
+#define  PFC_Disable()       	  				GpioDataRegs.GPASET.bit.GPIO10    		= 1
+#define  PFC_Enable()	      				       GpioDataRegs.GPACLEAR.bit.GPIO10  	       = 1
 //===========================================================================
 // emergence stop
 //===========================================================================

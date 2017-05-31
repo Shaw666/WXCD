@@ -106,22 +106,35 @@ void SCI_Init(Uint32 buad) {
 }
 
 Uint16 SciaReceiveCount = 0;
-Uint16 SciaReceiveBuff[74]={0};
+Uint16 SciaReceiveBuff[10]={0};
 Uint16 SciaRecTimeoutCount = 0;
 
 Uint16 SciaResponseCount = 0;
 Uint16 SciaResponseBuff[5];
 Uint16 SciaResponTimeoutCount = 0;
 Uint16 DataBuff[10];
+
+Uint16 checkOrderflag=0;
 void Module_SciaRxFIFO(void)  //串口接收中断
 {
 	Uint16 data=0;
-	Uint16 rankCount=0,compare=64;
-
-
+//	Uint16 rankCount=0,compare=64;
+	checkOrderflag++;
 	while (SciaRegs.SCIFFRX.bit.RXFFST > 0) {
 		if (SciaReceiveCount < DealRxLenth) {
 			data = SciaRegs.SCIRXBUF.all;
+			if(data==0x11){
+				checkOrderflag=1;
+			}
+			if((data==0x22)&&(checkOrderflag==2)){
+					checkOrderflag=3;
+			}
+			if((data==0x33)&&(checkOrderflag==4)){
+					//顺序校验成功
+					checkOrderflag=0;
+					SciaReceiveCount=0;
+					break;
+			}
 			SciaReceiveBuff[SciaReceiveCount++] = data;
 //			while(LinaRegs.SCIFLR.bit.TXRDY == 0);
 //			LinaRegs.SCITD = data;
@@ -129,98 +142,111 @@ void Module_SciaRxFIFO(void)  //串口接收中断
 	}
 
 	if (SciaReceiveCount >= DealRxLenth) {
+//		GpioDataRegs.GPATOGGLE.bit.GPIO16 	= 1;
 		switch (SciaReceiveBuff[0]) {
-		case 0xA1:
-//接收端交流电流电压帧
-			DataBuff[0] = ((SciaReceiveBuff[1] & 0x00ff) << 8)
-					+ ((SciaReceiveBuff[2] & 0x00FF));
-			DataBuff[1] = ((SciaReceiveBuff[3] & 0x00ff) << 8)
-					+ ((SciaReceiveBuff[4] & 0x00FF));
-			break;
+//		case 0xA1:
+////接收端交流电流电压帧
+//			DataBuff[0] = ((SciaReceiveBuff[1] & 0x00ff) << 8)
+//					+ ((SciaReceiveBuff[2] & 0x00FF));
+//			DataBuff[1] = ((SciaReceiveBuff[3] & 0x00ff) << 8)
+//					+ ((SciaReceiveBuff[4] & 0x00FF));
+//			SciaReceiveCount=0;
+//			break;
 		case 0xA2:
 //接收端直流电流电压帧
-			DataBuff[0] = ((SciaReceiveBuff[1] & 0x00ff) << 8)
+			DataBuff[0] = ((SciaReceiveBuff[1] & 0x00FF) << 8)
 					+ ((SciaReceiveBuff[2] & 0x00FF));
-			DataBuff[1] = ((SciaReceiveBuff[3] & 0x00ff) << 8)
+			DataBuff[1] = ((SciaReceiveBuff[3] & 0x00FF) << 8)
 					+ ((SciaReceiveBuff[4] & 0x00FF));
-			PID_Control_V(DataBuff[0]);
-			AdcRegs.ADCSOCFRC1.all = 0X035E; //软件触发AD 的 SOC0--SOC3采样
-			break;
-		case 0x55:
-//接收端状态
-			DataBuff[0] = ((SciaReceiveBuff[1] & 0x00ff) << 8)
-					+ ((SciaReceiveBuff[2] & 0x00FF));
-			DataBuff[1] = ((SciaReceiveBuff[3] & 0x00ff) << 8)
-					+ ((SciaReceiveBuff[4] & 0x00FF));
-//			PID_Control_V(DataBuff[0]);
-
-			break;
-		case 0xAA:
-			for(rankCount=0;rankCount<4;rankCount++){
-				if(SciaReceiveBuff[rankCount]==0x00ff){
-					//开机
-				}
-				else if(SciaReceiveBuff[rankCount]==0x00){
-					//关机
-				}
-				else{
-					//错误
-					break;
-				}
+//			testpwm(Sample.PFCVoltReal,DataBuff[1]);
+			PID_Control_V(Sample.PFCVoltReal,DataBuff[1]);
+			ModuleFault.bit.JSOutputVoltHighFault = 0;
+			if(Sample.PFCVoltReal>ModultOutputVotInitSet){
+			ModuleFault.bit.JSOutputVoltHighFault = 1;
 			}
+			SciaReceiveCount=0;
 			break;
-		case 0xAB:
-			if(SciaReceiveBuff[3]==0xD6){
-//				ResetDevice(0x00,0x01);
-//				DealRxLenth = 5;
-//				SciaReceiveCount=0;
-			}
-			else if((SciaReceiveBuff[3]==0xD1)){
-////				LocalConfDeal(SciaReceiveBuff);
-//				WriteConf(0x2001,SciaReceiveBuff);
-//				DealRxLenth = 7;
-//				SciaReceiveCount=0;
+//		case 0x55:
+////接收端状态
+//			DataBuff[0] = ((SciaReceiveBuff[1] & 0x00ff) << 8)
+//					+ ((SciaReceiveBuff[2] & 0x00FF));
+//			DataBuff[1] = ((SciaReceiveBuff[3] & 0x00ff) << 8)
+//					+ ((SciaReceiveBuff[4] & 0x00FF));
+////			PID_Control_V(DataBuff[0]);
+//			SciaReceiveCount=0;
+//			break;
+//		case 0xAA:
+//			for(rankCount=0;rankCount<4;rankCount++){
+//				if(SciaReceiveBuff[rankCount]==0x00ff){
+//					//开机
+//				}
+//				else if(SciaReceiveBuff[rankCount]==0x00){
+//					//关机
+//				}
+//				else{
+//					//错误
+//					break;
+//				}
+//			}
+//			SciaReceiveCount=0;
+//			break;
+//		case 0xAB:
+//			if(SciaReceiveBuff[3]==0xD6){
 ////				ResetDevice(0x00,0x01);
 ////				DealRxLenth = 5;
-
-			}
-			else if(SciaReceiveBuff[3]==0xD4){
-//				ReadLocalConf();
-			}
-			else{
-				//设置有误
-			}
-			break;
-		case 0xFF:
-			ModuleCtlReg.OutputVoltSet = 0;
-			for(rankCount=1;rankCount<5;rankCount++){
-				if(compare==(SciaReceiveBuff[rankCount]&0x00f0)){
-					ModuleCtlReg.OutputVoltSet |= ((0x000f&SciaReceiveBuff[rankCount])<<((4-rankCount)*4));
-				}
-				else{//接收电压设定值出错
-//					SciaReceiveBuff[1] = 0xff;
-//					SciaReceiveBuff[2] = 0xff;
-//					ResponseSCI(SciaReceiveBuff);
+////				SciaReceiveCount=0;
+//			}
+//			else if((SciaReceiveBuff[3]==0xD1)){
+//////				LocalConfDeal(SciaReceiveBuff);
+////				WriteConf(0x2001,SciaReceiveBuff);
+////				DealRxLenth = 7;
+////				SciaReceiveCount=0;
+//////				ResetDevice(0x00,0x01);
+//////				DealRxLenth = 5;
+//
+//			}
+//			else if(SciaReceiveBuff[3]==0xD4){
+////				ReadLocalConf();
+//			}
+//			else{
+//				//设置有误
+//			}
+//			SciaReceiveCount=0;
+//			break;
+//		case 0xFF:
+//			ModuleCtlReg.OutputVoltSet = 0;
+//			for(rankCount=1;rankCount<5;rankCount++){
+//				if(compare==(SciaReceiveBuff[rankCount]&0x00f0)){
+//					ModuleCtlReg.OutputVoltSet |= ((0x000f&SciaReceiveBuff[rankCount])<<((4-rankCount)*4));
+//				}
+//				else{//接收电压设定值出错
+////					SciaReceiveBuff[1] = 0xff;
+////					SciaReceiveBuff[2] = 0xff;
+////					ResponseSCI(SciaReceiveBuff);
+////					break;
+//				}
+//				compare+=16;
+//			}
+//			SciaReceiveCount=0;
+//			break;
+//		case 0xAF:
+//			for(rankCount=1;rankCount<5;rankCount++){
+//				if(SciaReceiveBuff[rankCount]==0x00AA){
+//					//握手
+//					SciaReceiveBuff[rankCount]=0x0055;
+//				}else{
+//					//握手失败
 //					break;
-				}
-				compare+=16;
-			}
-			break;
-		case 0xAF:
-			for(rankCount=1;rankCount<5;rankCount++){
-				if(SciaReceiveBuff[rankCount]==0x00AA){
-					//握手
-					SciaReceiveBuff[rankCount]=0x0055;
-				}else{
-					//握手失败
-					break;
-				}
-				//回应握手
-				SciaReceiveBuff[0]=0x00FA;
-				ResponseSCI(SciaReceiveBuff);
-			}
-			break;
-		default: SciaReceiveCount=0;
+//				}
+//				//回应握手
+//				SciaReceiveBuff[0]=0x00FA;
+//				ResponseSCI(SciaReceiveBuff);
+//			}
+//			SciaReceiveCount=0;
+//			break;
+		default:
+//			GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
+			SciaReceiveCount=0;
 			break;
 		}
 		SciaReceiveCount = 0;
